@@ -14,6 +14,10 @@ hiltViewModel = "1.2.0"
 coroutines = "1.7.3"
 icons = "1.6.7"
 paging-version = "3.3.5"
+retrofit = "2.11.0"
+okhttp = "4.12.0"
+gson = "2.11.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -36,6 +40,11 @@ coroutines = {group = "org.jetbrains.kotlinx",name = "kotlinx-coroutines-android
 extended-icons = { group = "androidx.compose.material",name = "material-icons-extended",version.ref = "icons"}
 paging-compose = {group = "androidx.paging", name = "paging-compose", version.ref = "paging-version"}
 paging-runtime = {group = "androidx.paging", name = "paging-runtime", version.ref = "paging-version"}
+retrofit2 =  {group = "com.squareup.retrofit2",name = "retrofit",version.ref = "retrofit"}
+converter-gson = {group = "com.squareup.retrofit2",name = "converter-gson",version.ref = "retrofit"}
+gson = {group = "com.google.code.gson",name = "gson",version.ref = "gson"}
+okhttp = {group = "com.squareup.okhttp3",name = "okhttp",version.ref = "okhttp"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
