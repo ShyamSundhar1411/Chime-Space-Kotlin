@@ -1,6 +1,6 @@
 package com.axionlabs.chimespace.di
 
-import com.axionlabs.chimespace.repository.ChimesApi
+import com.axionlabs.chimespace.network.ChimesApi
 import com.axionlabs.chimespace.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -8,7 +8,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
