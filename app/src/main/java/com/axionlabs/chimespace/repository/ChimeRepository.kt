@@ -15,6 +15,7 @@ class ChimeRepository @Inject constructor(private val api:ChimesApi) {
             dataOrException.data = api.getAllChimes()
             if(dataOrException.data.toString().isNotEmpty()) dataOrException.loading = false
         }catch (e:Exception){
+            dataOrException.loading = false
             dataOrException.e = e
         }
         return dataOrException

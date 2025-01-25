@@ -49,7 +49,6 @@ fun ChimeSpaceAppBarComponent(
             if(showProfile){
                 IconButton(
                     onClick = { /*TODO*/ },
-
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Person,
