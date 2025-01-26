@@ -2,6 +2,7 @@ package com.axionlabs.chimespace.components.homescreen
 
 import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -33,6 +34,8 @@ fun ChimeCardComponent(modifier: Modifier =  Modifier,chime: Chime = Chime(
         elevation = CardDefaults.cardElevation(8.dp),
 
     ) {
-        Text(text = chime.chimeTitle)
+        Column(modifier = Modifier.padding(16.dp)) {
+            ProfileComponent()
+        }
     }
 }

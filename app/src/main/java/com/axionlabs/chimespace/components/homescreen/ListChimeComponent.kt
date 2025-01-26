@@ -12,7 +12,10 @@ import com.axionlabs.chimespace.viewmodel.HomeViewModel
 fun ListChimeComponent(modifier: Modifier = Modifier, chimes: List<Chime>, viewModel: HomeViewModel = hiltViewModel()){
     LazyColumn {
         items(chimes.size){
-            Text(text = chimes[it].chimeTitle)
+            ChimeCardComponent(
+                chime = chimes[it],
+                homeViewModel = viewModel
+            )
         }
     }
 }

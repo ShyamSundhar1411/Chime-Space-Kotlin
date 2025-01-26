@@ -20,12 +20,13 @@ import com.axionlabs.chimespace.viewmodel.HomeViewModel
 @Composable
 fun HomeContent(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hiltViewModel()){
     var chimes = emptyList<Chime>()
-    when{
-        homeViewModel.data.value.loading == true -> LoaderComponent()
-        homeViewModel.data.value.e != null -> Text(homeViewModel.data.value.e.toString())
-        homeViewModel.data.value.data.toString().isNotEmpty() -> chimes = homeViewModel.data.value.data!!.chimes
-    }
+
     Box(modifier = modifier.fillMaxSize().padding(16.dp), contentAlignment =  Alignment.TopStart){
+        when{
+            homeViewModel.data.value.loading == true -> LoaderComponent()
+            homeViewModel.data.value.e != null -> Text(homeViewModel.data.value.e.toString())
+            homeViewModel.data.value.data.toString().isNotEmpty() -> chimes = homeViewModel.data.value.data!!.chimes
+        }
         ListChimeComponent(chimes = chimes)
     }
 }
