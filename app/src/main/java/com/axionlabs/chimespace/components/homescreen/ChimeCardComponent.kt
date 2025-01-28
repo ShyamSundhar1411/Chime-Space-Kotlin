@@ -31,6 +31,8 @@ fun ChimeCardComponent(modifier: Modifier =  Modifier,chime: Chime = dummyChime,
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             ProfileComponent(modifier = modifier,author = chime.author)
+            Text(text = chime.chimeTitle)
+            Text(text = chime.chimeContent)
         }
     }
 }

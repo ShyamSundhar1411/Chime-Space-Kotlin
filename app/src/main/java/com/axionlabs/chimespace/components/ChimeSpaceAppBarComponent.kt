@@ -9,12 +9,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,6 +27,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,6 +37,7 @@ fun ChimeSpaceAppBarComponent(
     showProfile: Boolean = false,
     showSettings: Boolean = false,
     icon: ImageVector? = null,
+    onProfileIconClick: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -48,7 +53,9 @@ fun ChimeSpaceAppBarComponent(
         navigationIcon = {
             if(showProfile){
                 IconButton(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        onProfileIconClick()
+                    },
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Person,
