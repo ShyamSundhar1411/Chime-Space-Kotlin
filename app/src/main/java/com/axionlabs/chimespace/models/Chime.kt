@@ -1,7 +1,7 @@
 package com.axionlabs.chimespace.models
 
 data class Chime(
-    val author: String,
+    val author: Author,
     val chimeContent: String,
     val chimeTitle: String,
     val createdAt: String,

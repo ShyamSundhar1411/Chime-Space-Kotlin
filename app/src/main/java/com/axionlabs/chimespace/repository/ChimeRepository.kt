@@ -2,7 +2,6 @@ package com.axionlabs.chimespace.repository
 
 import com.axionlabs.chimespace.data.DataOrException
 import com.axionlabs.chimespace.data.Resource
-import com.axionlabs.chimespace.models.Chime
 import com.axionlabs.chimespace.models.ListChimes
 import com.axionlabs.chimespace.network.ChimesApi
 import javax.inject.Inject

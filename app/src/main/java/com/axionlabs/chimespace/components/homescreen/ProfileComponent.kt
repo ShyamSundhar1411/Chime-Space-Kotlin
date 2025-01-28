@@ -26,18 +26,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.axionlabs.chimespace.data.dummyAuthor
+import com.axionlabs.chimespace.models.Author
 import com.axionlabs.chimespace.models.User
 
 @Preview(showBackground = true)
 @Composable
 fun ProfileComponent(
     modifier: Modifier = Modifier,
-    user: User = User(
-        email = "john.c.breckinridge@altostrat.com",
-        id = "6786a786b7710db02122bed1",
-        userName = "@johndoe",
-        penName = "John Doe",
-    )
+    author: Author = dummyAuthor
 ) {
     Row(
         modifier = Modifier
@@ -67,13 +64,13 @@ fun ProfileComponent(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = user.penName,
+                text = author.penName,
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Bold
                 )
             )
             Text(
-                text = user.userName,
+                text = author.userName,
                 style = MaterialTheme.typography.bodySmall.copy(
                     color = Color.Gray
                 )
