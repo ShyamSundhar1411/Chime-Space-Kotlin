@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.axionlabs.chimespace.components.ChimeSpaceAppBarComponent
-import com.axionlabs.chimespace.components.ProfileDrawerComponent
+import com.axionlabs.chimespace.components.NavigationDrawerComponent
 import com.axionlabs.chimespace.components.homescreen.HomeContent
 import com.axionlabs.chimespace.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel = hiltViewModel()) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    ProfileDrawerComponent(drawerState = drawerState) {
+    NavigationDrawerComponent(drawerState = drawerState) {
         Scaffold(modifier = Modifier.fillMaxSize(),
             topBar = {
                 ChimeSpaceAppBarComponent(
