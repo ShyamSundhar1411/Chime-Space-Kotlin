@@ -37,6 +37,7 @@ fun ChimeSpaceAppBarComponent(
     showProfile: Boolean = false,
     showSettings: Boolean = false,
     icon: ImageVector? = null,
+    onIconClick: () -> Unit = {},
     onProfileIconClick: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
@@ -63,6 +64,19 @@ fun ChimeSpaceAppBarComponent(
                         modifier = modifier.clip(
                             RoundedCornerShape(16.dp)
                         ).scale(0.6f)
+                    )
+                }
+            }
+            if(icon != null){
+                IconButton(
+                    onClick = {
+                        onIconClick()
+                    },
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = "Back",
+
                     )
                 }
             }

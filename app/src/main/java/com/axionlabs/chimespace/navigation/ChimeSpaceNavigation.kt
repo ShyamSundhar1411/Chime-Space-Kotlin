@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.axionlabs.chimespace.screens.HomeScreen
+import com.axionlabs.chimespace.screens.SettingsScreen
 
 @Composable
 fun ChimeSpaceNavigation(){
@@ -12,6 +13,10 @@ fun ChimeSpaceNavigation(){
     NavHost(navController = navController, startDestination = Routes.HomeScreen.name){
         composable(Routes.HomeScreen.name){
             HomeScreen(navController = navController)
+        }
+        composable(Routes.SettingsScreen.name){
+            SettingsScreen(navController = navController)
+
         }
 
     }

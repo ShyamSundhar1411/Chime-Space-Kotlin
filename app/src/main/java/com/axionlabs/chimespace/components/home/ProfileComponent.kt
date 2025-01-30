@@ -1,4 +1,4 @@
-package com.axionlabs.chimespace.components.homescreen
+package com.axionlabs.chimespace.components.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,10 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.axionlabs.chimespace.data.dummyAuthor
 import com.axionlabs.chimespace.models.Author
-import com.axionlabs.chimespace.models.User
 
 @Preview(showBackground = true)
 @Composable

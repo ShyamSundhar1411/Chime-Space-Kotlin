@@ -33,11 +33,15 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.axionlabs.chimespace.data.MenuItem
+import com.axionlabs.chimespace.navigation.Routes
+import com.axionlabs.chimespace.screens.SettingsScreen
 
 @Composable
 fun NavigationDrawerComponent(
     drawerState: DrawerState,
+    navController: NavController,
     content: @Composable (PaddingValues) -> Unit,
 
     ) {
@@ -46,17 +50,17 @@ fun NavigationDrawerComponent(
         MenuItem(
             icon = Icons.Outlined.PersonOutline,
             label = "Profile",
-            route = "profile"
+            route = Routes.HomeScreen.name
         ),
         MenuItem(
             icon = Icons.Outlined.Settings,
             label = "Settings",
-            route = "settings"
+            route = Routes.SettingsScreen.name
         ),
         MenuItem(
             icon = Icons.AutoMirrored.Outlined.Help,
             label = "Help and feedback",
-            route = "help"
+            route = Routes.HomeScreen.name
         ),
 
     )
@@ -127,7 +131,7 @@ fun NavigationDrawerComponent(
                             label = { Text(item.label) },
                             icon = {Icon(item.icon, contentDescription = item.label)},
                             selected = false,
-                            onClick = { /*TODO*/ },
+                            onClick = { navController.navigate(item.route) },
                         )
                     }
                 }
