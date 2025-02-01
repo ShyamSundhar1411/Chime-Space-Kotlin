@@ -1,5 +1,6 @@
 package com.axionlabs.chimespace.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -15,7 +16,7 @@ import com.axionlabs.chimespace.viewmodel.AuthViewModel
 @Composable
 fun AuthenticationScreen(navController: NavController, modifier : Modifier = Modifier, authViewModel: AuthViewModel = hiltViewModel()){
     val isAuthenticated = authViewModel.isAuthenticated.collectAsState().value
-
+    Log.d("AuthenticationScreen", "isAuthenticated: $isAuthenticated")
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

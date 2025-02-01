@@ -1,5 +1,6 @@
 package com.axionlabs.chimespace.di
 
+import com.axionlabs.chimespace.network.AuthApi
 import com.axionlabs.chimespace.network.ChimesApi
 import com.axionlabs.chimespace.utils.Constants
 import dagger.Module
@@ -21,5 +22,16 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ChimesApi::class.java)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideAuthApi(): AuthApi {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(AuthApi::class.java)
     }
 }
