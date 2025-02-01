@@ -45,7 +45,7 @@ retrofit2 =  {group = "com.squareup.retrofit2",name = "retrofit",version.ref = "
 converter-gson = {group = "com.squareup.retrofit2",name = "converter-gson",version.ref = "retrofit"}
 gson = {group = "com.google.code.gson",name = "gson",version.ref = "gson"}
 okhttp = {group = "com.squareup.okhttp3",name = "okhttp",version.ref = "okhttp"}
-datastore = {group = "anroidx.datastore",name = "datastore-preferences",version.ref = "datastore"}
+datastore = {group = "androidx.datastore",name = "datastore-preferences",version.ref = "datastore"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
