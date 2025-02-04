@@ -1,7 +1,7 @@
 package com.axionlabs.chimespace.data
 
-import com.axionlabs.chimespace.models.Author
-import com.axionlabs.chimespace.models.Chime
+import com.axionlabs.chimespace.models.domain.Author
+import com.axionlabs.chimespace.models.domain.Chime
 
 val dummyAuthor: Author = Author(
     email = "john.c.breckinridge@altostrat.com",

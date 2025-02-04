@@ -1,4 +1,4 @@
-package com.axionlabs.chimespace.models
+package com.axionlabs.chimespace.models.domain
 
 data class Chime(
     val author: Author,

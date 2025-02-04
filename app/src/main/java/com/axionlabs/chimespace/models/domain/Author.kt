@@ -1,6 +1,6 @@
-package com.axionlabs.chimespace.models
+package com.axionlabs.chimespace.models.domain
 
-data class User(
+data class Author(
     val email: String,
     val id: String,
     val penName: String,

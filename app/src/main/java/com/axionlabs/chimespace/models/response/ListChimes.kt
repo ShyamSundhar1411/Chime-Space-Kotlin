@@ -1,4 +1,6 @@
-package com.axionlabs.chimespace.models
+package com.axionlabs.chimespace.models.response
+
+import com.axionlabs.chimespace.models.domain.Chime
 
 data class ListChimes(
     val chimes: List<Chime>,

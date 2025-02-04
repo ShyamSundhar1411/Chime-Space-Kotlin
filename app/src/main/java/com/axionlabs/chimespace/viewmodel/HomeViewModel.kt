@@ -4,9 +4,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.axionlabs.chimespace.data.DataOrException
-import com.axionlabs.chimespace.models.ListChimes
+import com.axionlabs.chimespace.models.response.ListChimes
 import com.axionlabs.chimespace.repository.ChimeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -1,6 +1,6 @@
 package com.axionlabs.chimespace.network
 
-import com.axionlabs.chimespace.models.ListChimes
+import com.axionlabs.chimespace.models.response.ListChimes
 import retrofit2.http.GET
 import javax.inject.Singleton
 

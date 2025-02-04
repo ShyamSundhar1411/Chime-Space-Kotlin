@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.axionlabs.chimespace.data.dummyAuthor
-import com.axionlabs.chimespace.models.Author
+import com.axionlabs.chimespace.models.domain.Author
 
 @Preview(showBackground = true)
 @Composable

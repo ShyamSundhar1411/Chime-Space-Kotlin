@@ -14,12 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.axionlabs.chimespace.data.dummyChime
-import com.axionlabs.chimespace.models.Chime
+import com.axionlabs.chimespace.models.domain.Chime
 import com.axionlabs.chimespace.viewmodel.HomeViewModel
 
 @Preview(showBackground = true)
 @Composable
-fun ChimeCardComponent(modifier: Modifier =  Modifier,chime: Chime = dummyChime,homeViewModel: HomeViewModel = hiltViewModel()){
+fun ChimeCardComponent(modifier: Modifier =  Modifier, chime: Chime = dummyChime, homeViewModel: HomeViewModel = hiltViewModel()){
     OutlinedCard(
         modifier = modifier.padding(8.dp)
             .fillMaxWidth()
