@@ -11,12 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.axionlabs.chimespace.components.LoaderComponent
 import com.axionlabs.chimespace.components.auth.LoginFormComponent
 import com.axionlabs.chimespace.viewmodel.AuthViewModel
 
 @Composable
 fun AuthenticationScreen(navController: NavController, modifier : Modifier = Modifier, authViewModel: AuthViewModel = hiltViewModel()){
     val isAuthenticated = authViewModel.isAuthenticated.collectAsState().value
+
     Log.d("AuthenticationScreen", "isAuthenticated: $isAuthenticated")
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -24,6 +26,11 @@ fun AuthenticationScreen(navController: NavController, modifier : Modifier = Mod
     ){
         if(isAuthenticated) {
             navController.navigate("home")
+        }
+        when{
+            authViewModel.data.value.loading == true -> LoaderComponent()
+            authViewModel.data.value.e != null || authViewModel.data.value.e.toString() != "" -> Text(authViewModel.data.value.e.toString())
+
         }
         LoginFormComponent(
             modifier,

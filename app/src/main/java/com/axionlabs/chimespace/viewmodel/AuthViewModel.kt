@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
-    val data: MutableState<DataOrException<LoginResponse, Boolean, Exception>> = mutableStateOf(DataOrException(null, true, Exception("")))
+    val data: MutableState<DataOrException<LoginResponse, Boolean, Exception>> = mutableStateOf(DataOrException(null, false, Exception("")))
     private val _isAuthenticated = MutableStateFlow(false)
     val isAuthenticated = _isAuthenticated.asStateFlow()
     init {

@@ -8,6 +8,4 @@ import javax.inject.Singleton
 interface AuthApi {
     @POST("login/")
     suspend fun login(username: String, password: String): LoginResponse
-
-
 }
