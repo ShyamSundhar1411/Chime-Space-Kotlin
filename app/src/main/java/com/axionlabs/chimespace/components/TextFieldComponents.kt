@@ -56,6 +56,7 @@ fun PasswordTextField(
     valueState: MutableState<String>,
     placeholder: String,
     onAction: KeyboardActions = KeyboardActions.Default,
+    onValueChange: (String) -> Unit = {},
     imeActions: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
@@ -65,7 +66,7 @@ fun PasswordTextField(
 
     OutlinedTextField(
         value = valueState.value,
-        onValueChange = { valueState.value = it },
+        onValueChange = onValueChange,
         label = { Text(text = placeholder) },
         maxLines = maxLines,
         singleLine = singleLine,

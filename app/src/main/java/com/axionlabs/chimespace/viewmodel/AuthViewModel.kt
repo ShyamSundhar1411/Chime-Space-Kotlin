@@ -1,6 +1,7 @@
 package com.axionlabs.chimespace.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
@@ -39,6 +40,7 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository) 
                 SharedPreferencesManager.putValue("refreshToken", data.value.data!!.refreshToken)
             }
             data.value.loading = false
+            Log.d("Login", "login: ${data.value.data}")
         }
     }
     private fun checkAuthenticationStatus() {
