@@ -1,9 +1,14 @@
 package com.axionlabs.chimespace.viewmodel
 
 import android.content.Context
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.axionlabs.chimespace.data.DataOrException
+import com.axionlabs.chimespace.models.domain.User
+import com.axionlabs.chimespace.models.response.LoginResponse
 import com.axionlabs.chimespace.repository.AuthRepository
 import com.axionlabs.chimespace.utils.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
+    val data: MutableState<DataOrException<LoginResponse, Boolean, Exception>> = mutableStateOf(DataOrException(null, true, Exception("")))
     private val _isAuthenticated = MutableStateFlow(false)
     val isAuthenticated = _isAuthenticated.asStateFlow()
     init {
@@ -22,9 +28,21 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository) 
             checkAuthenticationStatus()
         }
     }
-
+    fun login(username: String, password: String) {
+        viewModelScope.launch {
+            data.value.loading = true
+            data.value = repository.login(username = username, password = password)
+            data.value.loading = false
+            if(data.value.data?.user?.id?.isNotEmpty() == true){
+                SharedPreferencesManager.putValue("isAuthenticated", true)
+                _isAuthenticated.value = true
+                SharedPreferencesManager.putValue("accessToken", data.value.data!!.accessToken)
+                SharedPreferencesManager.putValue("refreshToken", data.value.data!!.refreshToken)
+            }
+        }
+    }
     private fun checkAuthenticationStatus() {
-        _isAuthenticated.value = SharedPreferencesManager.getBoolean("isAuthenticated", false)
+        _isAuthenticated.value = SharedPreferencesManager.getValue("isAuthenticated", false)
     }
 
 }

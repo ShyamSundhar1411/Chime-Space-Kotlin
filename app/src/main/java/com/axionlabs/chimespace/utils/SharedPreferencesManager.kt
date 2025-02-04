@@ -9,11 +9,16 @@ object SharedPreferencesManager {
     fun init(context: Context){
         sharedPreferences = context.getSharedPreferences(PREFS_NAME,Context.MODE_PRIVATE)
     }
-    fun saveBoolean(key: String, value: Boolean){
+    fun putValue(key: String, value: Boolean){
         sharedPreferences.edit().putBoolean(key,value).apply()
     }
-    fun getBoolean(key: String, defaultValue: Boolean): Boolean{
-        return sharedPreferences.getBoolean(key,defaultValue) ?: defaultValue
+    fun getValue(key: String,value: Boolean): Boolean{
+        return sharedPreferences.getBoolean(key,value) ?: value
     }
-
+    fun putValue(key: String, value: String){
+        sharedPreferences.edit().putString(key,value).apply()
+    }
+    fun getValue(key:String, value: String): String{
+        return sharedPreferences.getString(key,value) ?: value
+    }
 }
