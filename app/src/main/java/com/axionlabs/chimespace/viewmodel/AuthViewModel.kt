@@ -32,13 +32,13 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository) 
         viewModelScope.launch {
             data.value.loading = true
             data.value = repository.login(username = username, password = password)
-            data.value.loading = false
             if(data.value.data?.user?.id?.isNotEmpty() == true){
                 SharedPreferencesManager.putValue("isAuthenticated", true)
                 _isAuthenticated.value = true
                 SharedPreferencesManager.putValue("accessToken", data.value.data!!.accessToken)
                 SharedPreferencesManager.putValue("refreshToken", data.value.data!!.refreshToken)
             }
+            data.value.loading = false
         }
     }
     private fun checkAuthenticationStatus() {
