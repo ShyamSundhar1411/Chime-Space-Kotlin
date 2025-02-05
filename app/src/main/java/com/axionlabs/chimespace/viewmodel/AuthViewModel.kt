@@ -23,12 +23,8 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
     val data: MutableState<DataOrException<LoginResponse, Boolean, Exception>> = mutableStateOf(DataOrException(null, false, Exception("")))
     private val _isAuthenticated = MutableStateFlow(false)
-    val isAuthenticated = _isAuthenticated.asStateFlow()
-    init {
-        viewModelScope.launch {
-            checkAuthenticationStatus()
-        }
-    }
+    val isAuthenticated = SharedPreferencesManager.getValue("isAuthenticated",false)
+
     fun login(username: String, password: String) {
         viewModelScope.launch {
             data.value.loading = true
@@ -40,11 +36,7 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository) 
                 SharedPreferencesManager.putValue("refreshToken", data.value.data!!.refreshToken)
             }
             data.value.loading = false
-            Log.d("Login", "login: ${data.value.data}")
+            Log.d("AuthViewModel", "login: ${data.value.data}")
         }
     }
-    private fun checkAuthenticationStatus() {
-        _isAuthenticated.value = SharedPreferencesManager.getValue("isAuthenticated", false)
-    }
-
 }

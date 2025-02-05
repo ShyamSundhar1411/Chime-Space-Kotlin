@@ -13,30 +13,33 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.axionlabs.chimespace.components.LoaderComponent
 import com.axionlabs.chimespace.components.auth.LoginFormComponent
+import com.axionlabs.chimespace.navigation.Routes
 import com.axionlabs.chimespace.viewmodel.AuthViewModel
 
 @Composable
-fun AuthenticationScreen(navController: NavController, modifier : Modifier = Modifier, authViewModel: AuthViewModel = hiltViewModel()){
-    val isAuthenticated = authViewModel.isAuthenticated.collectAsState().value
+fun AuthenticationScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    authViewModel: AuthViewModel = hiltViewModel()
+) {
+    val isAuthenticated = authViewModel.isAuthenticated
 
     Log.d("AuthenticationScreen", "isAuthenticated: $isAuthenticated")
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-    ){
-        if(isAuthenticated) {
-            navController.navigate("home")
-        }
-        when{
-            authViewModel.data.value.loading == true -> LoaderComponent()
-            authViewModel.data.value.e != null || authViewModel.data.value.e.toString() != "" -> Text(authViewModel.data.value.e.toString())
-
+    ) {
+        if (isAuthenticated) {
+            navController.navigate(Routes.HomeScreen.name) {
+                popUpTo(Routes.AuthenticationScreen.name) {
+                    inclusive = true
+                }
+            }
         }
         LoginFormComponent(
             modifier,
-            onLogin = ({ username, password ->
-                authViewModel.login(username, password)
-            })
+            authViewModel
         )
+
     }
 }
