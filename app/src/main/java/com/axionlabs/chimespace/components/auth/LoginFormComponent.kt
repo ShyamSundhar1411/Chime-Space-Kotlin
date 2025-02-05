@@ -22,7 +22,7 @@ import com.axionlabs.chimespace.components.PasswordTextField
 import com.axionlabs.chimespace.viewmodel.AuthViewModel
 
 @Composable
-fun LoginFormComponent(modifier: Modifier = Modifier, authViewModel: AuthViewModel = hiltViewModel()){
+fun LoginFormComponent(modifier: Modifier = Modifier, onLogin: (String, String) -> Unit){
     val userNameState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable {
         mutableStateOf("")
@@ -31,7 +31,7 @@ fun LoginFormComponent(modifier: Modifier = Modifier, authViewModel: AuthViewMod
     val isValidForm = remember(userNameState.value, passwordState.value) {
         userNameState.value.trim().isNotEmpty() && passwordState.value.trim().isNotEmpty()
     }
-    val context = LocalContext.current
+
     LazyColumn(
         modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -61,14 +61,7 @@ fun LoginFormComponent(modifier: Modifier = Modifier, authViewModel: AuthViewMod
             Button(
                 onClick = {
                     if (!isValidForm) return@Button
-                    authViewModel.login(userNameState.value.trim(), passwordState.value.trim())
-                    if(authViewModel.data.value.e?.message?.isNotEmpty() == true){
-                        Toast.makeText(context, "Login Failed:"+authViewModel.data.value.e.toString(), Toast.LENGTH_SHORT).show()
-
-                    }
-                    else{
-                        Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
-                    }
+                    onLogin(userNameState.value.trim(), passwordState.value.trim())
 
                 }
             ){

@@ -22,8 +22,6 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
     val data: MutableState<DataOrException<LoginResponse, Boolean, Exception>> = mutableStateOf(DataOrException(null, false, Exception("")))
-    private val _isAuthenticated = MutableStateFlow(false)
-    val isAuthenticated = SharedPreferencesManager.getValue("isAuthenticated",false)
 
     fun login(username: String, password: String) {
         viewModelScope.launch {
@@ -31,12 +29,14 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository) 
             data.value = repository.login(username = username, password = password)
             if(data.value.data?.user?.id?.isNotEmpty() == true){
                 SharedPreferencesManager.putValue("isAuthenticated", true)
-                _isAuthenticated.value = true
                 SharedPreferencesManager.putValue("accessToken", data.value.data!!.accessToken)
                 SharedPreferencesManager.putValue("refreshToken", data.value.data!!.refreshToken)
             }
             data.value.loading = false
             Log.d("AuthViewModel", "login: ${data.value.data}")
         }
+    }
+    fun logout(){
+        SharedPreferencesManager.putValue("isAuthenticated", false)
     }
 }

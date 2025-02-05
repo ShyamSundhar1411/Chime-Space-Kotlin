@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.automirrored.outlined.Help
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.DrawerState
@@ -33,17 +35,19 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.axionlabs.chimespace.data.MenuItem
 import com.axionlabs.chimespace.navigation.Routes
 import com.axionlabs.chimespace.screens.SettingsScreen
+import com.axionlabs.chimespace.viewmodel.AuthViewModel
 
 @Composable
 fun NavigationDrawerComponent(
     drawerState: DrawerState,
     navController: NavController,
+    authViewModel: AuthViewModel = hiltViewModel(),
     content: @Composable (PaddingValues) -> Unit,
-
     ) {
 
     val menuItems = listOf<MenuItem>(
@@ -134,6 +138,19 @@ fun NavigationDrawerComponent(
                             onClick = { navController.navigate(item.route) },
                         )
                     }
+                    NavigationDrawerItem(
+                        label = {Text("logout")},
+                        icon = { Icon(Icons.AutoMirrored.Filled.Logout, contentDescription =  "logout")},
+                        selected = false,
+                        onClick = {
+                            authViewModel.logout()
+                            navController.navigate(Routes.AuthenticationScreen.name) {
+                                popUpTo(Routes.HomeScreen.name) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+                    )
                 }
             }
         },

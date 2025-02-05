@@ -11,16 +11,17 @@ import com.axionlabs.chimespace.screens.SettingsScreen
 @Composable
 fun ChimeSpaceNavigation(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.AuthenticationScreen.name){
+    NavHost(navController = navController, startDestination = Routes.HomeScreen.name){
+        composable(Routes.AuthenticationScreen.name){
+            AuthenticationScreen(navController = navController)
+        }
         composable(Routes.HomeScreen.name){
             HomeScreen(navController = navController)
         }
         composable(Routes.SettingsScreen.name){
             SettingsScreen(navController = navController)
         }
-        composable(Routes.AuthenticationScreen.name){
-            AuthenticationScreen(navController = navController)
-        }
+
 
     }
 
