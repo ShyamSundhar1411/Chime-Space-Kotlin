@@ -8,11 +8,11 @@ import java.util.concurrent.Executor
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(private val api: AuthApi) {
-    suspend fun login(username: String, password: String): DataOrException<LoginResponse, Boolean, Exception> {
+    suspend fun login(loginRequest: LoginRequest): DataOrException<LoginResponse, Boolean, Exception> {
         val dataOrException = DataOrException<LoginResponse, Boolean, Exception>()
         try{
             dataOrException.loading = true
-            val response = api.login(LoginRequest(username = username, password = password))
+            val response = api.login(loginRequest)
             dataOrException.data = response.body()
             if(dataOrException.data.toString().isNotEmpty()) dataOrException.loading = false
         }catch (e: Exception){

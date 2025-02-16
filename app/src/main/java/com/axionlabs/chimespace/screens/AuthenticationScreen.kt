@@ -1,11 +1,10 @@
 package com.axionlabs.chimespace.screens
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,25 +22,36 @@ fun AuthenticationScreen(
     modifier: Modifier = Modifier,
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
-
     val context = LocalContext.current
+    val data = authViewModel.data.collectAsState().value
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-
-        LoginFormComponent(
-            modifier,
-            onLogin = {username,password ->
-                authViewModel.login(username,password)
-                if(authViewModel.data.value.e?.message?.isNotEmpty() == true){
-                    Toast.makeText(context, "Login Failed:"+authViewModel.data.value.e.toString(), Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
-                    navController.navigate(Routes.HomeScreen.name)
+        when {
+            data.loading == true -> LoaderComponent() // Show loading indicator
+            data.e != null -> {
+                LaunchedEffect(data.e) {
+                    Toast.makeText(context, "Error: ${data.e!!.message}", Toast.LENGTH_SHORT).show()
                 }
             }
+            data.data != null -> {
+                LaunchedEffect(data.data) {
+                    Toast.makeText(context, "Welcome ${data.data?.user?.userName}!", Toast.LENGTH_SHORT).show()
+                    navController.navigate(Routes.HomeScreen.name) {
+                        popUpTo(Routes.AuthenticationScreen.name) { inclusive = true }
+                    }
+                }
+            }
+        }
+
+        LoginFormComponent(
+            modifier = modifier,
+            onLogin = { loginRequest ->
+                authViewModel.login(loginRequest)
+            },
+            isLoading = data.loading
         )
     }
 }

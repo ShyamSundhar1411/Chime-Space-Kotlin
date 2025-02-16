@@ -1,6 +1,5 @@
 package com.axionlabs.chimespace.components.auth
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.text.KeyboardActions
@@ -13,16 +12,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.axionlabs.chimespace.components.CommonTextField
 import com.axionlabs.chimespace.components.PasswordTextField
-import com.axionlabs.chimespace.viewmodel.AuthViewModel
+import com.axionlabs.chimespace.models.request.LoginRequest
 
 @Composable
-fun LoginFormComponent(modifier: Modifier = Modifier, onLogin: (String, String) -> Unit){
+fun LoginFormComponent(
+    modifier: Modifier = Modifier,
+    onLogin: (LoginRequest) -> Unit,
+    isLoading: Boolean?
+){
     val userNameState = rememberSaveable { mutableStateOf("") }
     val passwordState = rememberSaveable {
         mutableStateOf("")
@@ -61,9 +62,11 @@ fun LoginFormComponent(modifier: Modifier = Modifier, onLogin: (String, String) 
             Button(
                 onClick = {
                     if (!isValidForm) return@Button
-                    onLogin(userNameState.value.trim(), passwordState.value.trim())
+                    val loginRequest = LoginRequest(userNameState.value.trim(),passwordState.value.trim())
+                    onLogin(loginRequest)
 
-                }
+                },
+                enabled = isValidForm || isLoading == false,
             ){
                 Text(text = "Login")
             }

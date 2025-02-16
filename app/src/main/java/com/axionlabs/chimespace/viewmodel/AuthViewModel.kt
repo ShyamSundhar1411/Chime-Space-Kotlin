@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.axionlabs.chimespace.data.DataOrException
 import com.axionlabs.chimespace.models.domain.User
+import com.axionlabs.chimespace.models.request.LoginRequest
 import com.axionlabs.chimespace.models.response.LoginResponse
 import com.axionlabs.chimespace.repository.AuthRepository
 import com.axionlabs.chimespace.utils.SharedPreferencesManager
@@ -21,19 +22,29 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(private val repository: AuthRepository) : ViewModel() {
-    val data: MutableState<DataOrException<LoginResponse, Boolean, Exception>> = mutableStateOf(DataOrException(null, false, Exception("")))
-
-    fun login(username: String, password: String) {
+    private val _data = MutableStateFlow(DataOrException<LoginResponse, Boolean, Exception>())
+    val data = _data.asStateFlow()
+    fun login(loginRequest: LoginRequest) {
         viewModelScope.launch {
-            data.value.loading = true
-            data.value = repository.login(username = username, password = password)
-            if(data.value.data?.user?.id?.isNotEmpty() == true){
-                SharedPreferencesManager.putValue("isAuthenticated", true)
-                SharedPreferencesManager.putValue("accessToken", data.value.data!!.accessToken)
-                SharedPreferencesManager.putValue("refreshToken", data.value.data!!.refreshToken)
+            _data.value = DataOrException(loading = true)
+
+            try {
+                val response = repository.login(loginRequest)
+                _data.value = response
+
+                response.data?.let {
+                    if (it.user.id.isNotEmpty()) {
+                        SharedPreferencesManager.putValue("isAuthenticated", true)
+                        SharedPreferencesManager.putValue("accessToken", it.accessToken)
+                        SharedPreferencesManager.putValue("refreshToken", it.refreshToken)
+                    }
+                }
+            } catch (e: Exception) {
+                _data.value = DataOrException(e = e)
+                Log.e("AuthViewModel", "Login error: ${e.message}", e)
+            } finally {
+                _data.value = _data.value.copy(loading = false)
             }
-            data.value.loading = false
-            Log.d("AuthViewModel", "login: ${data.value.data}")
         }
     }
     fun logout(){
