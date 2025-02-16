@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.axionlabs.chimespace.data.DataOrException
 import com.axionlabs.chimespace.models.domain.User
 import com.axionlabs.chimespace.models.request.LoginRequest
+import com.axionlabs.chimespace.models.request.SignUpRequest
 import com.axionlabs.chimespace.models.response.LoginResponse
 import com.axionlabs.chimespace.repository.AuthRepository
 import com.axionlabs.chimespace.utils.SharedPreferencesManager
