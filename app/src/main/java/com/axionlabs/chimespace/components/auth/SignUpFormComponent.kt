@@ -1,7 +1,9 @@
 package com.axionlabs.chimespace.components.auth
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
@@ -21,7 +23,8 @@ import com.axionlabs.chimespace.models.request.SignUpRequest
 fun SignUpFormComponent(
     modifier: Modifier = Modifier,
     onSignUp: (SignUpRequest) -> Unit,
-    isLoading: Boolean?
+    isLoading: Boolean?,
+    onLoginClick: () -> Unit
 ) {
     val userNameState = rememberSaveable {
         mutableStateOf("")
@@ -54,7 +57,7 @@ fun SignUpFormComponent(
     }
 
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         item {
@@ -109,6 +112,12 @@ fun SignUpFormComponent(
                     reEnterPasswordState.value = it
                 }
             )
+            Text(
+                text = "Already Having Account ? Login",
+                modifier = Modifier.padding(4.dp).clickable {
+                    onLoginClick()
+                }
+            )
             Button(
                 onClick = {
                     if (!isValidForm) return@Button
@@ -123,7 +132,7 @@ fun SignUpFormComponent(
                 },
                 enabled = isValidForm || isLoading == false,
             ) {
-                Text(text = "Login")
+                Text(text = "Sign Up")
             }
         }
     }
