@@ -7,6 +7,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -23,10 +24,6 @@ import kotlinx.coroutines.launch
 fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel = hiltViewModel()) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val isAuthenticated = homeViewModel.isAuthenticated.collectAsState().value
-    if(!isAuthenticated){
-        navController.navigate(Routes.AuthenticationScreen.name)
-    }
     NavigationDrawerComponent(drawerState = drawerState,navController = navController) {
         Scaffold(modifier = Modifier.fillMaxSize(),
             topBar = {

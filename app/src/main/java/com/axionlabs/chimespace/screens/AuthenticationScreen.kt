@@ -33,6 +33,16 @@ fun AuthenticationScreen(
     val loginData = authViewModel.loginData.collectAsState().value
     val signUpData = authViewModel.signUpData.collectAsState().value
     val data = if (showLoginForm.value) loginData else signUpData
+    val isAuthenticated = authViewModel.isAuthenticated.collectAsState().value
+    val isLoading = authViewModel.isLoading.collectAsState().value
+    Log.d("AuthenticationScreen", "isLoading: $isLoading")
+    LaunchedEffect(isAuthenticated) {
+        if(isAuthenticated){
+                navController.navigate(Routes.HomeScreen.name)
+        }
+    }
+
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -54,30 +64,36 @@ fun AuthenticationScreen(
                 }
             }
         }
-        if(showLoginForm.value){
-            LoginFormComponent(
-                modifier = modifier,
-                onLogin = { loginRequest ->
-                    authViewModel.login(loginRequest)
-                },
-                isLoading = data.loading,
-                onSignUpClick = {
-                    showLoginForm.value = false
-                }
-            )
+        if(isLoading){
+            LoaderComponent()
         }
         else{
-            SignUpFormComponent(
-                modifier = modifier,
-                onSignUp = { signUpRequest ->
-                    authViewModel.signUp(signUpRequest)
-                },
-                isLoading = data.loading,
-                onLoginClick = {
-                    showLoginForm.value = true
-                }
-            )
+            if(showLoginForm.value){
+                LoginFormComponent(
+                    modifier = modifier,
+                    onLogin = { loginRequest ->
+                        authViewModel.login(loginRequest)
+                    },
+                    isLoading = data.loading,
+                    onSignUpClick = {
+                        showLoginForm.value = false
+                    }
+                )
+            }
+            else{
+                SignUpFormComponent(
+                    modifier = modifier,
+                    onSignUp = { signUpRequest ->
+                        authViewModel.signUp(signUpRequest)
+                    },
+                    isLoading = data.loading,
+                    onLoginClick = {
+                        showLoginForm.value = true
+                    }
+                )
+            }
         }
+
 
     }
 }

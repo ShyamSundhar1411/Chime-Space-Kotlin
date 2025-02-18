@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.axionlabs.chimespace.data.DataOrException
 import com.axionlabs.chimespace.models.domain.User
 import com.axionlabs.chimespace.models.request.LoginRequest
@@ -29,15 +30,18 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository) 
         DataOrException()
     )
     val loginData = _loginData.asStateFlow()
-
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading = _isLoading.asStateFlow()
     private val _signUpData = MutableStateFlow<DataOrException<SignUpResponse, Boolean, Exception>>(
         DataOrException()
     )
     private val _isAuthenticated = MutableStateFlow(false)
     val isAuthenticated = _isAuthenticated.asStateFlow()
-    init{
+    init {
         viewModelScope.launch {
+            _isLoading.value = true
             checkAuthenticationStatus()
+            _isLoading.value = false
         }
     }
     val signUpData = _signUpData.asStateFlow()
@@ -87,7 +91,12 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository) 
         SharedPreferencesManager.putValue("isAuthenticated", false)
     }
     private fun checkAuthenticationStatus() {
-        _isAuthenticated.value = SharedPreferencesManager.getValue("isAuthenticated", false)
+
+        viewModelScope.launch {
+            _isAuthenticated.value = SharedPreferencesManager.getValue("isAuthenticated", false)
+
+        }
+
     }
     private fun saveAuthState(accessToken: String, refreshToken: String) {
         SharedPreferencesManager.putValue("isAuthenticated", true)

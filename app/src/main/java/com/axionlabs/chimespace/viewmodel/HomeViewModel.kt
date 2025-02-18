@@ -17,13 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: ChimeRepository): ViewModel(){
     val data: MutableState<DataOrException<ListChimes, Boolean, Exception>> = mutableStateOf(DataOrException(null,true,Exception("")))
-    private val _isAuthenticated = MutableStateFlow(false)
-    val isAuthenticated = _isAuthenticated.asStateFlow()
-    init{
-        viewModelScope.launch {
-            getAllChimes()
-            checkAuthenticationStatus()
-        }
+    init {
+        getAllChimes()
     }
     private fun getAllChimes(){
         viewModelScope.launch {
@@ -31,9 +26,6 @@ class HomeViewModel @Inject constructor(private val repository: ChimeRepository)
                 data.value = repository.getAllChimes()
                 data.value.loading = false
          }
-    }
-    private fun checkAuthenticationStatus() {
-        _isAuthenticated.value = SharedPreferencesManager.getValue("isAuthenticated", false)
     }
 
 }
