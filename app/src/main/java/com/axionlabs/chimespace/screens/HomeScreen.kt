@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.axionlabs.chimespace.components.ChimeSpaceAppBarComponent
+import com.axionlabs.chimespace.components.ChimeSpaceBottomNavBarComponent
 import com.axionlabs.chimespace.components.NavigationDrawerComponent
 import com.axionlabs.chimespace.components.home.HomeContent
 import com.axionlabs.chimespace.navigation.Routes
@@ -37,8 +38,10 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel = hilt
                         }
                     }
                 )
+            },
+            bottomBar = {
+                ChimeSpaceBottomNavBarComponent(navController = navController)
             }
-
         ) { innerPadding ->
             Box(
                 modifier = Modifier

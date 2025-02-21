@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.axionlabs.chimespace.components.ChimeSpaceAppBarComponent
+import com.axionlabs.chimespace.components.ChimeSpaceBottomNavBarComponent
 
 @Composable
 fun SettingsScreen(modifier: Modifier = Modifier,navController: NavController){
@@ -27,6 +28,9 @@ fun SettingsScreen(modifier: Modifier = Modifier,navController: NavController){
                     navController.popBackStack()
                 }
             )
+        },
+        bottomBar = {
+            ChimeSpaceBottomNavBarComponent(navController = navController)
         }
     ) { innerPadding ->
         Box(
