@@ -30,8 +30,7 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository) 
         DataOrException()
     )
     val loginData = _loginData.asStateFlow()
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading = _isLoading.asStateFlow()
+
     private val _signUpData = MutableStateFlow<DataOrException<SignUpResponse, Boolean, Exception>>(
         DataOrException()
     )
@@ -39,9 +38,7 @@ class AuthViewModel @Inject constructor(private val repository: AuthRepository) 
     val isAuthenticated = _isAuthenticated.asStateFlow()
     init {
         viewModelScope.launch {
-            _isLoading.value = true
             checkAuthenticationStatus()
-            _isLoading.value = false
         }
     }
     val signUpData = _signUpData.asStateFlow()

@@ -57,7 +57,7 @@ fun SignUpFormComponent(
     }
 
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         item {
