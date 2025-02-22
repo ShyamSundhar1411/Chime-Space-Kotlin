@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,11 +23,10 @@ import com.axionlabs.chimespace.components.ChimeSpaceAppBarComponent
 import com.axionlabs.chimespace.components.LoaderComponent
 import com.axionlabs.chimespace.components.auth.LoginFormComponent
 import com.axionlabs.chimespace.components.auth.SignUpFormComponent
-import com.axionlabs.chimespace.models.response.LoginResponse
-import com.axionlabs.chimespace.models.response.SignUpResponse
+import com.axionlabs.chimespace.models.response.auth.LoginResponse
+import com.axionlabs.chimespace.models.response.auth.SignUpResponse
 import com.axionlabs.chimespace.navigation.Routes
 import com.axionlabs.chimespace.viewmodel.AuthViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun AuthenticationScreen(

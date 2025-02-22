@@ -2,7 +2,6 @@ package com.axionlabs.chimespace.components.auth
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
@@ -17,7 +16,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.axionlabs.chimespace.components.CommonTextField
 import com.axionlabs.chimespace.components.PasswordTextField
-import com.axionlabs.chimespace.models.request.SignUpRequest
+import com.axionlabs.chimespace.models.request.auth.SignUpRequest
 
 @Composable
 fun SignUpFormComponent(

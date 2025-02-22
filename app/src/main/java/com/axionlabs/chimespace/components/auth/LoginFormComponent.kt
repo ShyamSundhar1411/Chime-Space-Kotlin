@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.axionlabs.chimespace.components.CommonTextField
 import com.axionlabs.chimespace.components.PasswordTextField
-import com.axionlabs.chimespace.models.request.LoginRequest
+import com.axionlabs.chimespace.models.request.auth.LoginRequest
 
 @Composable
 fun LoginFormComponent(

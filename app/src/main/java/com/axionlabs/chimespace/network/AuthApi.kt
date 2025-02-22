@@ -1,9 +1,9 @@
 package com.axionlabs.chimespace.network
 
-import com.axionlabs.chimespace.models.request.LoginRequest
-import com.axionlabs.chimespace.models.request.SignUpRequest
-import com.axionlabs.chimespace.models.response.LoginResponse
-import com.axionlabs.chimespace.models.response.SignUpResponse
+import com.axionlabs.chimespace.models.request.auth.LoginRequest
+import com.axionlabs.chimespace.models.request.auth.SignUpRequest
+import com.axionlabs.chimespace.models.response.auth.LoginResponse
+import com.axionlabs.chimespace.models.response.auth.SignUpResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers

@@ -1,12 +1,11 @@
 package com.axionlabs.chimespace.repository
 
 import com.axionlabs.chimespace.data.DataOrException
-import com.axionlabs.chimespace.models.request.LoginRequest
-import com.axionlabs.chimespace.models.request.SignUpRequest
-import com.axionlabs.chimespace.models.response.LoginResponse
-import com.axionlabs.chimespace.models.response.SignUpResponse
+import com.axionlabs.chimespace.models.request.auth.LoginRequest
+import com.axionlabs.chimespace.models.request.auth.SignUpRequest
+import com.axionlabs.chimespace.models.response.auth.LoginResponse
+import com.axionlabs.chimespace.models.response.auth.SignUpResponse
 import com.axionlabs.chimespace.network.AuthApi
-import java.util.concurrent.Executor
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(private val api: AuthApi) {

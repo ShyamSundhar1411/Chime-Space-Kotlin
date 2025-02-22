@@ -1,4 +1,4 @@
-package com.axionlabs.chimespace.models.response
+package com.axionlabs.chimespace.models.response.auth
 
 import com.axionlabs.chimespace.models.domain.User
 

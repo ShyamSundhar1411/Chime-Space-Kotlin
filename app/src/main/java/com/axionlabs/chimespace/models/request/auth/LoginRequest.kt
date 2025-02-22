@@ -1,4 +1,4 @@
-package com.axionlabs.chimespace.models.request
+package com.axionlabs.chimespace.models.request.auth
 
 import com.google.gson.annotations.SerializedName
 

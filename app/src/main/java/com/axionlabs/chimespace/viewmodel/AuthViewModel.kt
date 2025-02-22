@@ -1,19 +1,13 @@
 package com.axionlabs.chimespace.viewmodel
 
-import android.content.Context
 import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.axionlabs.chimespace.data.DataOrException
-import com.axionlabs.chimespace.models.domain.User
-import com.axionlabs.chimespace.models.request.LoginRequest
-import com.axionlabs.chimespace.models.request.SignUpRequest
-import com.axionlabs.chimespace.models.response.LoginResponse
-import com.axionlabs.chimespace.models.response.SignUpResponse
+import com.axionlabs.chimespace.models.request.auth.LoginRequest
+import com.axionlabs.chimespace.models.request.auth.SignUpRequest
+import com.axionlabs.chimespace.models.response.auth.LoginResponse
+import com.axionlabs.chimespace.models.response.auth.SignUpResponse
 import com.axionlabs.chimespace.repository.AuthRepository
 import com.axionlabs.chimespace.utils.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +15,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.sign
 
 
 @HiltViewModel
