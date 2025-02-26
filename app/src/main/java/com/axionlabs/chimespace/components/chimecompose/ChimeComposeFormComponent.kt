@@ -62,6 +62,8 @@ fun ChimeComposeFormComponent(modifier: Modifier = Modifier, onSubmit: (ChimeCre
             CommonTextField(
                 valueState = chimeContentState,
                 placeholder = "Chime Content",
+                maxLines = 5,
+                singleLine = false,
                 onValueChange = {
                     chimeContentState.value = it
                 },
@@ -94,6 +96,7 @@ fun ChimeComposeFormComponent(modifier: Modifier = Modifier, onSubmit: (ChimeCre
                             isPrivate = isPrivateState.value
                         )
                         onSubmit.invoke(chimeCreateOrUpdateRequest)
+                        Toast.makeText(context, "Chime Created", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(
                             context,

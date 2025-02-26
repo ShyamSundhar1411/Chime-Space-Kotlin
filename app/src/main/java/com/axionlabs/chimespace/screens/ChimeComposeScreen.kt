@@ -10,12 +10,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.axionlabs.chimespace.components.ChimeSpaceAppBarComponent
 import com.axionlabs.chimespace.components.ChimeSpaceBottomNavBarComponent
+import com.axionlabs.chimespace.components.chimecompose.ChimeComposeFormComponent
+import com.axionlabs.chimespace.viewmodel.ChimeComposeViewModel
 
 @Composable
-fun ChimeComposeScreen(navController: NavController){
+fun ChimeComposeScreen(navController: NavController, chimeComposeViewModel: ChimeComposeViewModel = hiltViewModel()){
     Scaffold(
         topBar = {
             ChimeSpaceAppBarComponent(
@@ -34,9 +37,14 @@ fun ChimeComposeScreen(navController: NavController){
     ){innerPadding ->
         Box(
             modifier = Modifier.padding(innerPadding).fillMaxSize(),
-            contentAlignment = Alignment.Center
         ){
-            Text("Compose Chime")
+            ChimeComposeFormComponent(
+                modifier = Modifier.padding(innerPadding),
+                onSubmit = {
+                    chimeComposeViewModel.createChime(it)
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
