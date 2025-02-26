@@ -17,7 +17,8 @@ class HomeViewModel @Inject constructor(private val repository: ChimeRepository)
     init {
         getAllChimes()
     }
-    private fun getAllChimes(){
+
+    fun getAllChimes(){
         viewModelScope.launch {
                 data.value.loading = true
                 data.value = repository.getAllChimes()

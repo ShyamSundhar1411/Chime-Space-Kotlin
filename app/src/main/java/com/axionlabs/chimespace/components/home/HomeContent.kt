@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.axionlabs.chimespace.components.ExceptionResponseComponent
 import com.axionlabs.chimespace.components.LoaderComponent
 import com.axionlabs.chimespace.models.domain.Chime
 import com.axionlabs.chimespace.viewmodel.HomeViewModel
@@ -22,7 +23,7 @@ fun HomeContent(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hi
     Box(modifier = modifier.fillMaxSize().padding(16.dp), contentAlignment =  Alignment.TopStart){
         when{
             homeViewModel.data.value.loading == true -> LoaderComponent()
-            homeViewModel.data.value.e != null -> Text(homeViewModel.data.value.e.toString())
+            homeViewModel.data.value.e != null -> ExceptionResponseComponent(modifier = modifier, message = "Something went wrong", tryAgainFunction = {homeViewModel.getAllChimes()}, showTryAgainButton = true)
             homeViewModel.data.value.data.toString().isNotEmpty() -> chimes = homeViewModel.data.value.data!!.chimes
         }
         ListChimeComponent(chimes = chimes)
