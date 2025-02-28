@@ -14,7 +14,7 @@ import javax.inject.Singleton
 interface ChimesApi {
     @GET("chimes/")
     suspend fun getAllChimes(): ListChimeResponse
-
+    @Headers("Content-Type: application/json")
     @POST("chimes/")
     suspend fun createChime(@Header("Authorization") authToken: String, @Body chimeData: ChimeCreateOrUpdateRequest): ChimeCreateOrUpdateResponse
 

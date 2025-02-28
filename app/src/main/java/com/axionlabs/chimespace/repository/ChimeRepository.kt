@@ -23,9 +23,11 @@ class ChimeRepository @Inject constructor(private val api:ChimesApi) {
     }
     suspend fun createChime(authToken: String,chimeData: ChimeCreateOrUpdateRequest): DataOrException<ChimeCreateOrUpdateResponse,Boolean,Exception>{
         val dataOrException = DataOrException<ChimeCreateOrUpdateResponse,Boolean,Exception>()
+        Log.d("ChimeRepository", "createChime: $authToken",)
+        Log.d("ChimeRepository", "createChime: $chimeData")
         try{
             dataOrException.loading = true
-            dataOrException.data = api.createChime(authToken,chimeData)
+            dataOrException.data = api.createChime("Bearer $authToken",chimeData)
             if(dataOrException.data.toString().isNotEmpty()) dataOrException.loading = false
         }catch(e: Exception){
             dataOrException.loading = false

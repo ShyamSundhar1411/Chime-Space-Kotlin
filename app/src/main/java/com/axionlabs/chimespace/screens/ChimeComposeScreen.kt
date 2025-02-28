@@ -20,6 +20,7 @@ import com.axionlabs.chimespace.components.ChimeSpaceAppBarComponent
 import com.axionlabs.chimespace.components.ChimeSpaceBottomNavBarComponent
 import com.axionlabs.chimespace.components.LoaderComponent
 import com.axionlabs.chimespace.components.chimecompose.ChimeComposeFormComponent
+import com.axionlabs.chimespace.navigation.Routes
 import com.axionlabs.chimespace.viewmodel.ChimeComposeViewModel
 
 @Composable
@@ -49,7 +50,11 @@ fun ChimeComposeScreen(navController: NavController, chimeComposeViewModel: Chim
             when {
                 chimeData.data != null -> {
                     Toast.makeText(context, "Chime Created", Toast.LENGTH_SHORT).show()
-                    navController.popBackStack()
+                    navController.navigate(Routes.HomeScreen.name) {
+                        popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 }
                 chimeData.e != null -> {
                     val errorMessage = chimeData.e?.localizedMessage ?: "An error occurred"
