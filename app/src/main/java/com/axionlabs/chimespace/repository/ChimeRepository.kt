@@ -1,5 +1,6 @@
 package com.axionlabs.chimespace.repository
 
+import android.util.Log
 import com.axionlabs.chimespace.data.DataOrException
 import com.axionlabs.chimespace.models.request.chime.ChimeCreateOrUpdateRequest
 import com.axionlabs.chimespace.models.response.chime.ChimeCreateOrUpdateResponse
@@ -30,6 +31,8 @@ class ChimeRepository @Inject constructor(private val api:ChimesApi) {
             dataOrException.loading = false
             dataOrException.e  = e
         }
+        Log.d("ChimeRepository", "createChime: ${dataOrException.data}")
+        Log.d("ChimeRepository", "createChime: ${dataOrException.e}")
         return dataOrException
     }
 }

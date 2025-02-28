@@ -96,7 +96,7 @@ fun ChimeComposeFormComponent(modifier: Modifier = Modifier, onSubmit: (ChimeCre
                             isPrivate = isPrivateState.value
                         )
                         onSubmit.invoke(chimeCreateOrUpdateRequest)
-                        Toast.makeText(context, "Chime Created", Toast.LENGTH_SHORT).show()
+
                     } else {
                         Toast.makeText(
                             context,
