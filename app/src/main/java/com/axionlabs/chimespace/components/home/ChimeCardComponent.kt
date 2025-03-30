@@ -19,16 +19,21 @@ import com.axionlabs.chimespace.viewmodel.HomeViewModel
 
 @Preview(showBackground = true)
 @Composable
-fun ChimeCardComponent(modifier: Modifier =  Modifier, chime: Chime = dummyChime, homeViewModel: HomeViewModel = hiltViewModel()){
+fun ChimeCardComponent(
+    modifier: Modifier = Modifier,
+    chime: Chime = dummyChime,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
     OutlinedCard(
-        modifier = modifier.padding(8.dp)
-            .fillMaxWidth()
-            .clickable { Log.d("Card Component", "Clicked") },
+        modifier =
+            modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .clickable { Log.d("Card Component", "Clicked") },
         elevation = CardDefaults.cardElevation(8.dp),
-
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            ProfileComponent(modifier = modifier,author = chime.author)
+            ProfileComponent(modifier = modifier, author = chime.author)
             Text(text = chime.chimeTitle)
             Text(text = chime.chimeContent)
         }

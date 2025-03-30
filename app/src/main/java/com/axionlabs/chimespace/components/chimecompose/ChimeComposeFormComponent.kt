@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ButtonDefaults
@@ -28,24 +27,31 @@ import com.axionlabs.chimespace.components.CommonTextField
 import com.axionlabs.chimespace.models.request.chime.ChimeCreateOrUpdateRequest
 
 @Composable
-fun ChimeComposeFormComponent(modifier: Modifier = Modifier, onSubmit: (ChimeCreateOrUpdateRequest) -> Unit = {}){
-    val chimeTitleState = rememberSaveable {
-        mutableStateOf("")
-    }
-    val chimeContentState = rememberSaveable {
-        mutableStateOf("")
-    }
-    val isPrivateState = rememberSaveable {
-        mutableStateOf(false)
-    }
+fun ChimeComposeFormComponent(
+    modifier: Modifier = Modifier,
+    onSubmit: (ChimeCreateOrUpdateRequest) -> Unit = {},
+) {
+    val chimeTitleState =
+        rememberSaveable {
+            mutableStateOf("")
+        }
+    val chimeContentState =
+        rememberSaveable {
+            mutableStateOf("")
+        }
+    val isPrivateState =
+        rememberSaveable {
+            mutableStateOf(false)
+        }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val isValidForm = remember(chimeTitleState.value, chimeContentState.value) {
-        chimeTitleState.value.trim().isNotEmpty() && chimeContentState.value.trim().isNotEmpty()
-    }
+    val isValidForm =
+        remember(chimeTitleState.value, chimeContentState.value) {
+            chimeTitleState.value.trim().isNotEmpty() && chimeContentState.value.trim().isNotEmpty()
+        }
     val context = LocalContext.current
     LazyColumn(
         modifier = modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         item {
             CommonTextField(
@@ -54,10 +60,10 @@ fun ChimeComposeFormComponent(modifier: Modifier = Modifier, onSubmit: (ChimeCre
                 onValueChange = {
                     chimeTitleState.value = it
                 },
-                onAction = KeyboardActions {
-                    keyboardController?.hide()
-                }
-
+                onAction =
+                    KeyboardActions {
+                        keyboardController?.hide()
+                    },
             )
             CommonTextField(
                 valueState = chimeContentState,
@@ -67,10 +73,11 @@ fun ChimeComposeFormComponent(modifier: Modifier = Modifier, onSubmit: (ChimeCre
                 onValueChange = {
                     chimeContentState.value = it
                 },
-                onAction = KeyboardActions {
-                    if(!isValidForm) return@KeyboardActions
-                    keyboardController?.hide()
-                }
+                onAction =
+                    KeyboardActions {
+                        if (!isValidForm) return@KeyboardActions
+                        keyboardController?.hide()
+                    },
             )
             FilterChip(
                 onClick = {
@@ -78,40 +85,42 @@ fun ChimeComposeFormComponent(modifier: Modifier = Modifier, onSubmit: (ChimeCre
                 },
                 label = { Text("Is Private") },
                 selected = isPrivateState.value,
-                leadingIcon = if (isPrivateState.value) {
-                    {
-                        Icon(
-                            imageVector = Icons.Filled.Done,
-                            contentDescription = "Done icon"
-                        )
-                    }
-                } else null
+                leadingIcon =
+                    if (isPrivateState.value) {
+                        {
+                            Icon(
+                                imageVector = Icons.Filled.Done,
+                                contentDescription = "Done icon",
+                            )
+                        }
+                    } else {
+                        null
+                    },
             )
-            FilledTonalButton (
+            FilledTonalButton(
                 onClick = {
                     if (isValidForm) {
-                        val chimeCreateOrUpdateRequest = ChimeCreateOrUpdateRequest(
-                            chimeTitle = chimeTitleState.value.trim(),
-                            chimeContent = chimeContentState.value.trim(),
-                            isPrivate = isPrivateState.value
-                        )
+                        val chimeCreateOrUpdateRequest =
+                            ChimeCreateOrUpdateRequest(
+                                chimeTitle = chimeTitleState.value.trim(),
+                                chimeContent = chimeContentState.value.trim(),
+                                isPrivate = isPrivateState.value,
+                            )
                         onSubmit.invoke(chimeCreateOrUpdateRequest)
-
                     } else {
-                        Toast.makeText(
-                            context,
-                            "Please fill all the fields",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        Toast
+                            .makeText(
+                                context,
+                                "Please fill all the fields",
+                                Toast.LENGTH_SHORT,
+                            ).show()
                     }
                 },
-
-                ) {
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Create,
                     contentDescription = "Post",
-                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                    modifier = Modifier.size(ButtonDefaults.IconSize),
                 )
                 Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
                 Text(text = "Post")

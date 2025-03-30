@@ -3,7 +3,6 @@ package com.axionlabs.chimespace.components.home
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,14 +16,25 @@ import com.axionlabs.chimespace.viewmodel.HomeViewModel
 
 @Preview(showBackground = true)
 @Composable
-fun HomeContent(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = hiltViewModel()){
+fun HomeContent(
+    modifier: Modifier = Modifier,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
     var chimes = emptyList<Chime>()
 
-    Box(modifier = modifier.fillMaxSize().padding(16.dp), contentAlignment =  Alignment.TopStart){
-        when{
+    Box(modifier = modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.TopStart) {
+        when {
             homeViewModel.data.value.loading == true -> LoaderComponent()
-            homeViewModel.data.value.e != null -> ExceptionResponseComponent(modifier = modifier, message = "Something went wrong", tryAgainFunction = {homeViewModel.getAllChimes()}, showTryAgainButton = true)
-            homeViewModel.data.value.data.toString().isNotEmpty() -> chimes = homeViewModel.data.value.data!!.chimes
+            homeViewModel.data.value.e != null ->
+                ExceptionResponseComponent(modifier = modifier, message = "Something went wrong", tryAgainFunction = {
+                    homeViewModel.getAllChimes()
+                }, showTryAgainButton = true)
+            homeViewModel.data.value.data
+                .toString()
+                .isNotEmpty() ->
+                chimes =
+                    homeViewModel.data.value.data!!
+                        .chimes
         }
         ListChimeComponent(chimes = chimes)
     }

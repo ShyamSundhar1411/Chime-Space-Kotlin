@@ -7,7 +7,6 @@ import com.axionlabs.chimespace.utils.NoAuth
 import com.axionlabs.chimespace.utils.RequiresAuth
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import javax.inject.Singleton
@@ -17,9 +16,11 @@ interface ChimesApi {
     @NoAuth
     @GET("chimes/")
     suspend fun getAllChimes(): ListChimeResponse
+
     @Headers("Content-Type: application/json")
     @RequiresAuth
     @POST("chimes/")
-    suspend fun createChime(@Body chimeData: ChimeCreateOrUpdateRequest): ChimeCreateOrUpdateResponse
-
+    suspend fun createChime(
+        @Body chimeData: ChimeCreateOrUpdateRequest,
+    ): ChimeCreateOrUpdateResponse
 }

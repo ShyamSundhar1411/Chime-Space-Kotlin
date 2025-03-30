@@ -7,8 +7,6 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,16 +15,19 @@ import com.axionlabs.chimespace.components.ChimeSpaceAppBarComponent
 import com.axionlabs.chimespace.components.ChimeSpaceBottomNavBarComponent
 import com.axionlabs.chimespace.components.NavigationDrawerComponent
 import com.axionlabs.chimespace.components.home.HomeContent
-import com.axionlabs.chimespace.navigation.Routes
 import com.axionlabs.chimespace.viewmodel.HomeViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    navController: NavController,
+    homeViewModel: HomeViewModel = hiltViewModel(),
+) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    NavigationDrawerComponent(drawerState = drawerState,navController = navController) {
-        Scaffold(modifier = Modifier.fillMaxSize(),
+    NavigationDrawerComponent(drawerState = drawerState, navController = navController) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
             topBar = {
                 ChimeSpaceAppBarComponent(
                     title = "ChimeSpace",
@@ -36,17 +37,18 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel = hilt
                         scope.launch {
                             drawerState.open()
                         }
-                    }
+                    },
                 )
             },
             bottomBar = {
                 ChimeSpaceBottomNavBarComponent(navController = navController)
-            }
+            },
         ) { innerPadding ->
             Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize()
+                modifier =
+                    Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
             ) {
                 HomeContent(homeViewModel = homeViewModel)
             }

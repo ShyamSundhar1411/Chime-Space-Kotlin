@@ -6,5 +6,5 @@ data class Chime(
     val chimeTitle: String,
     val createdAt: String,
     val id: String,
-    val isPrivate: Boolean
+    val isPrivate: Boolean,
 )

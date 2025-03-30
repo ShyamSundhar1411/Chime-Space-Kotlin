@@ -5,25 +5,25 @@ import okhttp3.Request
 import okhttp3.Response
 import retrofit2.Invocation
 import java.lang.reflect.Method
-import javax.inject.Inject
 
-class AuthInterceptor: Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            val originalRequest = chain.request()
-            val requiresAuth  = requiresAuthentication(originalRequest)
-            val requestBuilder: Request.Builder = originalRequest.newBuilder().apply {
-                header("User-Agent","android")
-                if(requiresAuth){
-                    val accessToken = SharedPreferencesManager.getValue("accessToken","")
-                    addHeader("Authorization","Bearer $accessToken")
+class AuthInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val originalRequest = chain.request()
+        val requiresAuth = requiresAuthentication(originalRequest)
+        val requestBuilder: Request.Builder =
+            originalRequest.newBuilder().apply {
+                header("User-Agent", "android")
+                if (requiresAuth) {
+                    val accessToken = SharedPreferencesManager.getValue("accessToken", "")
+                    addHeader("Authorization", "Bearer $accessToken")
                 }
             }
-            val modifiedRequest = requestBuilder.build()
-            return chain.proceed(modifiedRequest)
+        val modifiedRequest = requestBuilder.build()
+        return chain.proceed(modifiedRequest)
+    }
 
-        }
-        private fun requiresAuthentication (request: Request): Boolean {
-            val method: Method? = request.tag(Invocation::class.java)?.method()
-            return method?.isAnnotationPresent(RequiresAuth::class.java) ?: false
-        }
+    private fun requiresAuthentication(request: Request): Boolean {
+        val method: Method? = request.tag(Invocation::class.java)?.method()
+        return method?.isAnnotationPresent(RequiresAuth::class.java) ?: false
+    }
 }

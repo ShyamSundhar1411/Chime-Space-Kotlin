@@ -16,7 +16,10 @@ import com.axionlabs.chimespace.components.ChimeSpaceAppBarComponent
 import com.axionlabs.chimespace.components.ChimeSpaceBottomNavBarComponent
 
 @Composable
-fun SettingsScreen(modifier: Modifier = Modifier,navController: NavController){
+fun SettingsScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController,
+) {
     Scaffold(
         topBar = {
             ChimeSpaceAppBarComponent(
@@ -26,21 +29,21 @@ fun SettingsScreen(modifier: Modifier = Modifier,navController: NavController){
                 icon = Icons.AutoMirrored.Filled.ArrowBack,
                 onIconClick = {
                     navController.popBackStack()
-                }
+                },
             )
         },
         bottomBar = {
             ChimeSpaceBottomNavBarComponent(navController = navController)
-        }
+        },
     ) { innerPadding ->
         Box(
-            modifier = modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ){
+            modifier =
+                modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
             Text("Settings")
         }
-
     }
 }

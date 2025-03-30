@@ -32,28 +32,29 @@ import com.axionlabs.chimespace.viewmodel.AuthViewModel
 fun AuthenticationScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    authViewModel: AuthViewModel = hiltViewModel()
+    authViewModel: AuthViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    val showLoginForm = rememberSaveable {
-        mutableStateOf(true)
-    }
+    val showLoginForm =
+        rememberSaveable {
+            mutableStateOf(true)
+        }
     val loginData = authViewModel.loginData.collectAsState().value
     val signUpData = authViewModel.signUpData.collectAsState().value
     val data = if (showLoginForm.value) loginData else signUpData
     val isAuthenticated = authViewModel.isAuthenticated.collectAsState().value
-    val isCheckingAuth = rememberSaveable {
-        mutableStateOf(true)
-    }
-    LaunchedEffect(isAuthenticated) {
-        if(isAuthenticated){
-                navController.navigate(Routes.HomeScreen.name){
-                    popUpTo(Routes.AuthenticationScreen.name){
-                        inclusive = true
-                    }
-                }
+    val isCheckingAuth =
+        rememberSaveable {
+            mutableStateOf(true)
         }
-        else{
+    LaunchedEffect(isAuthenticated) {
+        if (isAuthenticated) {
+            navController.navigate(Routes.HomeScreen.name) {
+                popUpTo(Routes.AuthenticationScreen.name) {
+                    inclusive = true
+                }
+            }
+        } else {
             isCheckingAuth.value = false
         }
     }
@@ -61,94 +62,90 @@ fun AuthenticationScreen(
     Scaffold(
         topBar = {
             ChimeSpaceAppBarComponent(
-                    title = "ChimeSpace",
-                    showProfile = false,
-                    showSettings = false,
+                title = "ChimeSpace",
+                showProfile = false,
+                showSettings = false,
             )
-        }
+        },
     ) { innerPadding ->
 
-    Box(
-        modifier = Modifier.fillMaxSize().padding(innerPadding),
-        contentAlignment = Alignment.Center
-    ) {
-
-        if(isCheckingAuth.value){
-            LoaderComponent()
-        }
-        else {
-            AnimatedVisibility(
-                visible = !isCheckingAuth.value,
-                enter = fadeIn(),
-                exit = fadeOut()
-            ) {
-                when {
-                    data.loading == true -> LoaderComponent()
-                    data.e != null -> {
-                        LaunchedEffect(data.e) {
-                            Toast.makeText(
-                                context,
-                                "Error: ${data.e!!.message}",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
+        Box(
+            modifier = Modifier.fillMaxSize().padding(innerPadding),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (isCheckingAuth.value) {
+                LoaderComponent()
+            } else {
+                AnimatedVisibility(
+                    visible = !isCheckingAuth.value,
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ) {
+                    when {
+                        data.loading == true -> LoaderComponent()
+                        data.e != null -> {
+                            LaunchedEffect(data.e) {
+                                Toast
+                                    .makeText(
+                                        context,
+                                        "Error: ${data.e!!.message}",
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                            }
                         }
 
-                    }
-
-                    data.data != null -> {
-                        LaunchedEffect(data.data) {
-                            when (val response = data.data) {
-                                is SignUpResponse -> {
-                                    Toast.makeText(context, "Welcome ${response.user.userName}!", Toast.LENGTH_SHORT).show()
-                                    navController.navigate(Routes.HomeScreen.name) {
-                                        popUpTo(Routes.AuthenticationScreen.name) { inclusive = true }
+                        data.data != null -> {
+                            LaunchedEffect(data.data) {
+                                when (val response = data.data) {
+                                    is SignUpResponse -> {
+                                        Toast.makeText(context, "Welcome ${response.user.userName}!", Toast.LENGTH_SHORT).show()
+                                        navController.navigate(Routes.HomeScreen.name) {
+                                            popUpTo(Routes.AuthenticationScreen.name) { inclusive = true }
+                                        }
                                     }
-                                }
-                                is LoginResponse -> {
-                                    Toast.makeText(context, "Welcome ${response.user.userName}!", Toast.LENGTH_SHORT).show()
-                                    navController.navigate(Routes.HomeScreen.name) {
-                                        popUpTo(Routes.AuthenticationScreen.name) { inclusive = true }
+                                    is LoginResponse -> {
+                                        Toast.makeText(context, "Welcome ${response.user.userName}!", Toast.LENGTH_SHORT).show()
+                                        navController.navigate(Routes.HomeScreen.name) {
+                                            popUpTo(Routes.AuthenticationScreen.name) { inclusive = true }
+                                        }
                                     }
-                                }
-                                else -> {
-                                    Log.e("AuthenticationScreen", "Unexpected data type: ${response?.javaClass?.simpleName}")
+                                    else -> {
+                                        Log.e("AuthenticationScreen", "Unexpected data type: ${response?.javaClass?.simpleName}")
+                                    }
                                 }
                             }
                         }
 
-                    }
-
-                    else -> {
-                        if (showLoginForm.value) {
-                            LoginFormComponent(
-                                modifier = modifier,
-                                onLogin = { loginRequest ->
-                                    authViewModel.login(loginRequest)
-                                },
-                                isLoading = data.loading,
-                                onSignUpClick = {
-                                    showLoginForm.value = false
-                                    isCheckingAuth.value = false
-                                }
-                            )
-                        } else {
-                            SignUpFormComponent(
-                                modifier = modifier,
-                                onSignUp = { signUpRequest ->
-                                    authViewModel.signUp(signUpRequest)
-                                },
-                                isLoading = data.loading,
-                                onLoginClick = {
-                                    showLoginForm.value = true
-                                    isCheckingAuth.value = false
-                                }
-                            )
+                        else -> {
+                            if (showLoginForm.value) {
+                                LoginFormComponent(
+                                    modifier = modifier,
+                                    onLogin = { loginRequest ->
+                                        authViewModel.login(loginRequest)
+                                    },
+                                    isLoading = data.loading,
+                                    onSignUpClick = {
+                                        showLoginForm.value = false
+                                        isCheckingAuth.value = false
+                                    },
+                                )
+                            } else {
+                                SignUpFormComponent(
+                                    modifier = modifier,
+                                    onSignUp = { signUpRequest ->
+                                        authViewModel.signUp(signUpRequest)
+                                    },
+                                    isLoading = data.loading,
+                                    onLoginClick = {
+                                        showLoginForm.value = true
+                                        isCheckingAuth.value = false
+                                    },
+                                )
+                            }
                         }
                     }
                 }
             }
-        }
         }
     }
 }

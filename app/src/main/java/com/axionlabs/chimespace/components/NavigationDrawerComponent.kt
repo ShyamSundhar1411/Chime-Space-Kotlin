@@ -48,83 +48,87 @@ fun NavigationDrawerComponent(
     navController: NavController,
     authViewModel: AuthViewModel = hiltViewModel(),
     content: @Composable (PaddingValues) -> Unit,
-    ) {
-
-    val menuItems = listOf<MenuItem>(
-        MenuItem(
-            icon = Icons.Outlined.PersonOutline,
-            label = "Profile",
-            route = Routes.HomeScreen.name
-        ),
-        MenuItem(
-            icon = Icons.Outlined.Settings,
-            label = "Settings",
-            route = Routes.SettingsScreen.name
-        ),
-        MenuItem(
-            icon = Icons.AutoMirrored.Outlined.Help,
-            label = "Help and feedback",
-            route = Routes.HomeScreen.name
-        ),
-
-    )
+) {
+    val menuItems =
+        listOf<MenuItem>(
+            MenuItem(
+                icon = Icons.Outlined.PersonOutline,
+                label = "Profile",
+                route = Routes.HomeScreen.name,
+            ),
+            MenuItem(
+                icon = Icons.Outlined.Settings,
+                label = "Settings",
+                route = Routes.SettingsScreen.name,
+            ),
+            MenuItem(
+                icon = Icons.AutoMirrored.Outlined.Help,
+                label = "Help and feedback",
+                route = Routes.HomeScreen.name,
+            ),
+        )
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
                 Column(
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                        .verticalScroll(rememberScrollState())
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 16.dp)
+                            .verticalScroll(rememberScrollState()),
                 ) {
                     Spacer(Modifier.height(12.dp))
                     IconButton(
                         onClick = { /*TODO*/ },
-                        modifier = Modifier.padding(top = 12.dp,bottom = 12.dp)
+                        modifier = Modifier.padding(top = 12.dp, bottom = 12.dp),
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.PersonOutline,
                             contentDescription = "Profile",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                     Column(
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.Start,
-                        modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
                     ) {
                         Text(
                             text = "John Doe",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                fontWeight = FontWeight.Bold
-                            )
+                            style =
+                                MaterialTheme.typography.bodyMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                ),
                         )
                         Text(
                             text = "@johndoe",
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                color = Color.Gray
-                            )
+                            style =
+                                MaterialTheme.typography.bodySmall.copy(
+                                    color = Color.Gray,
+                                ),
                         )
                         Row(
-
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Start,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
                             Text(
-                                text = buildAnnotatedString {
-                                    append("14 ")
-                                    withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append("Following")
-                                    }
-                                }
+                                text =
+                                    buildAnnotatedString {
+                                        append("14 ")
+                                        withStyle(style = SpanStyle(color = Color.Gray)) {
+                                            append("Following")
+                                        }
+                                    },
                             )
                             Spacer(modifier = Modifier.width(16.dp))
                             Text(
-                                text = buildAnnotatedString {
-                                    append("20 ")
-                                    withStyle(style = SpanStyle(color = Color.Gray)) {
-                                        append("Followers")
-                                    }
-                                }
+                                text =
+                                    buildAnnotatedString {
+                                        append("20 ")
+                                        withStyle(style = SpanStyle(color = Color.Gray)) {
+                                            append("Followers")
+                                        }
+                                    },
                             )
                         }
                     }
@@ -133,14 +137,14 @@ fun NavigationDrawerComponent(
                     menuItems.forEach { item ->
                         NavigationDrawerItem(
                             label = { Text(item.label) },
-                            icon = {Icon(item.icon, contentDescription = item.label)},
+                            icon = { Icon(item.icon, contentDescription = item.label) },
                             selected = false,
                             onClick = { navController.navigate(item.route) },
                         )
                     }
                     NavigationDrawerItem(
-                        label = {Text("logout")},
-                        icon = { Icon(Icons.AutoMirrored.Filled.Logout, contentDescription =  "logout")},
+                        label = { Text("logout") },
+                        icon = { Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = "logout") },
                         selected = false,
                         onClick = {
                             authViewModel.logout()
@@ -149,13 +153,13 @@ fun NavigationDrawerComponent(
                                     inclusive = true
                                 }
                             }
-                        }
+                        },
                     )
                 }
             }
         },
-        drawerState = drawerState) {
+        drawerState = drawerState,
+    ) {
         content(PaddingValues(0.dp))
-
     }
 }

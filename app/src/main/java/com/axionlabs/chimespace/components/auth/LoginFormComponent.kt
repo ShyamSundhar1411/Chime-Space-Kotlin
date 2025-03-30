@@ -3,12 +3,11 @@ package com.axionlabs.chimespace.components.auth
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-
-
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -24,58 +23,62 @@ fun LoginFormComponent(
     modifier: Modifier = Modifier,
     onLogin: (LoginRequest) -> Unit,
     isLoading: Boolean?,
-    onSignUpClick: () -> Unit
-){
+    onSignUpClick: () -> Unit,
+) {
     val userNameState = rememberSaveable { mutableStateOf("") }
-    val passwordState = rememberSaveable {
-        mutableStateOf("")
-    }
+    val passwordState =
+        rememberSaveable {
+            mutableStateOf("")
+        }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val isValidForm = remember(userNameState.value, passwordState.value) {
-        userNameState.value.trim().isNotEmpty() && passwordState.value.trim().isNotEmpty()
-    }
+    val isValidForm =
+        remember(userNameState.value, passwordState.value) {
+            userNameState.value.trim().isNotEmpty() && passwordState.value.trim().isNotEmpty()
+        }
 
     LazyColumn(
         modifier = modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         item {
             CommonTextField(
                 valueState = userNameState,
                 placeholder = "Username",
-                onAction = KeyboardActions{
-                    keyboardController?.hide()
-                },
+                onAction =
+                    KeyboardActions {
+                        keyboardController?.hide()
+                    },
                 onValueChange = {
                     userNameState.value = it
-                }
+                },
             )
             PasswordTextField(
                 valueState = passwordState,
                 placeholder = "Password",
-                onAction = KeyboardActions {
-                    if (!isValidForm) return@KeyboardActions
-                    keyboardController?.hide()
-                },
+                onAction =
+                    KeyboardActions {
+                        if (!isValidForm) return@KeyboardActions
+                        keyboardController?.hide()
+                    },
                 onValueChange = {
                     passwordState.value = it
-                }
+                },
             )
             Text(
                 text = "Create Account",
-                modifier = Modifier.padding(4.dp).clickable {
-                    onSignUpClick()
-                }
+                modifier =
+                    Modifier.padding(4.dp).clickable {
+                        onSignUpClick()
+                    },
             )
             Button(
                 onClick = {
                     if (!isValidForm) return@Button
-                    val loginRequest = LoginRequest(userNameState.value.trim(),passwordState.value.trim())
+                    val loginRequest = LoginRequest(userNameState.value.trim(), passwordState.value.trim())
                     onLogin(loginRequest)
-
                 },
                 enabled = isValidForm || isLoading == false,
-            ){
+            ) {
                 Text(text = "Login")
             }
         }

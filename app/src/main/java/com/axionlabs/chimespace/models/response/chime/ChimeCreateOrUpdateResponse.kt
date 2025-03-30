@@ -7,5 +7,5 @@ data class ChimeCreateOrUpdateResponse(
     val author: User,
     val chime: Chime,
     val message: String,
-    val statusCode: Int
+    val statusCode: Int,
 )

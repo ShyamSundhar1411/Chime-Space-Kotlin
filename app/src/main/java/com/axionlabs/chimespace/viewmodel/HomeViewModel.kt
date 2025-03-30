@@ -12,18 +12,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: ChimeRepository): ViewModel(){
-    val data: MutableState<DataOrException<ListChimeResponse, Boolean, Exception>> = mutableStateOf(DataOrException(null,true,Exception("")))
-    init {
-        getAllChimes()
-    }
+class HomeViewModel
+    @Inject
+    constructor(
+        private val repository: ChimeRepository,
+    ) : ViewModel() {
+        val data: MutableState<DataOrException<ListChimeResponse, Boolean, Exception>> =
+            mutableStateOf(DataOrException(null, true, Exception("")))
 
-    fun getAllChimes(){
-        viewModelScope.launch {
+        init {
+            getAllChimes()
+        }
+
+        fun getAllChimes() {
+            viewModelScope.launch {
                 data.value.loading = true
                 data.value = repository.getAllChimes()
                 data.value.loading = false
-         }
+            }
+        }
     }
-
-}

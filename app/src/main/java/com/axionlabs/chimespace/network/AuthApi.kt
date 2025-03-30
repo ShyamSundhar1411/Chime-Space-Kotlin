@@ -14,10 +14,13 @@ import javax.inject.Singleton
 interface AuthApi {
     @Headers("Content-Type: application/json")
     @POST("auth/login/")
-    suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
+    suspend fun login(
+        @Body loginRequest: LoginRequest,
+    ): Response<LoginResponse>
+
     @Headers("Content-Type: application/json")
     @POST("auth/signup/")
-    suspend fun signUp(@Body signUpRequest: SignUpRequest): Response<SignUpResponse>
-
-
+    suspend fun signUp(
+        @Body signUpRequest: SignUpRequest,
+    ): Response<SignUpResponse>
 }

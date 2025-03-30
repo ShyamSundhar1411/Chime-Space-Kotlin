@@ -8,12 +8,16 @@ import com.axionlabs.chimespace.models.domain.Chime
 import com.axionlabs.chimespace.viewmodel.HomeViewModel
 
 @Composable
-fun ListChimeComponent(modifier: Modifier = Modifier, chimes: List<Chime>, viewModel: HomeViewModel = hiltViewModel()){
+fun ListChimeComponent(
+    modifier: Modifier = Modifier,
+    chimes: List<Chime>,
+    viewModel: HomeViewModel = hiltViewModel(),
+) {
     LazyColumn {
-        items(chimes.size){
+        items(chimes.size) {
             ChimeCardComponent(
                 chime = chimes[it],
-                homeViewModel = viewModel
+                homeViewModel = viewModel,
             )
         }
     }

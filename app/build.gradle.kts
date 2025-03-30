@@ -4,8 +4,19 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android.gradle.plugin)
+    alias(libs.plugins.ktlint)
 }
-
+ktlint {
+    version.set("1.5.0")
+    android.set(true)
+    outputToConsole.set(true)
+    ignoreFailures.set(false)
+    filter {
+        exclude("**/generated/**")
+        exclude("**/build/**")
+        include("**/src/**/*.kt")
+    }
+}
 android {
     namespace = "com.axionlabs.chimespace"
     compileSdk = 35
@@ -25,7 +36,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }

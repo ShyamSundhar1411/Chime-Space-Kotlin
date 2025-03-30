@@ -9,5 +9,7 @@ import javax.inject.Singleton
 @Singleton
 interface TokenApi {
     @POST("token/refresh")
-    fun refreshTokens(@Body refreshToken: TokenRefreshRequest): TokenRefreshResponse
+    fun refreshTokens(
+        @Body refreshToken: TokenRefreshRequest,
+    ): TokenRefreshResponse
 }

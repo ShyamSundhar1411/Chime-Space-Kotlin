@@ -1,18 +1,12 @@
 package com.axionlabs.chimespace.components
 
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.Help
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.PersonOutline
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
@@ -26,28 +20,28 @@ import com.axionlabs.chimespace.navigation.Routes
 
 @Composable
 fun ChimeSpaceBottomNavBarComponent(navController: NavController) {
-    val menuItems = listOf<MenuItem>(
-        MenuItem(
-            icon = Icons.Filled.Home,
-            label = "Home",
-            route = Routes.HomeScreen.name
-        ),
-        MenuItem(
-            icon = Icons.Filled.Search,
-            label = "Search",
-            route = Routes.SettingsScreen.name
-        ),
-        MenuItem(
-            icon = Icons.Filled.Create,
-            label = "Write",
-            route = Routes.ChimeComposeScreen.name
-        ),
-    )
-
+    val menuItems =
+        listOf<MenuItem>(
+            MenuItem(
+                icon = Icons.Filled.Home,
+                label = "Home",
+                route = Routes.HomeScreen.name,
+            ),
+            MenuItem(
+                icon = Icons.Filled.Search,
+                label = "Search",
+                route = Routes.SettingsScreen.name,
+            ),
+            MenuItem(
+                icon = Icons.Filled.Create,
+                label = "Write",
+                route = Routes.ChimeComposeScreen.name,
+            ),
+        )
 
     NavigationBar(
         modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 24.dp),
-        containerColor = Color.Transparent
+        containerColor = Color.Transparent,
     ) {
         val navBackStackEntry = navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry.value?.destination?.route
@@ -64,11 +58,10 @@ fun ChimeSpaceBottomNavBarComponent(navController: NavController) {
                 icon = {
                     Icon(
                         imageVector = item.icon,
-                        contentDescription = item.label
+                        contentDescription = item.label,
                     )
                 },
             )
         }
     }
-
 }

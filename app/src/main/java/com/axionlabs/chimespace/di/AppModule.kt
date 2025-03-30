@@ -9,7 +9,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,13 +21,15 @@ object AppModule {
     @Singleton
     @Provides
     fun provideChimeApi(): ChimesApi {
-        val okHttpBuilder = OkHttpClient.Builder().apply{
-            connectTimeout(30, TimeUnit.SECONDS)
-            readTimeout(30,TimeUnit.SECONDS)
-            writeTimeout(30,TimeUnit.SECONDS)
-            addInterceptor(AuthInterceptor())
-        }
-        return Retrofit.Builder()
+        val okHttpBuilder =
+            OkHttpClient.Builder().apply {
+                connectTimeout(30, TimeUnit.SECONDS)
+                readTimeout(30, TimeUnit.SECONDS)
+                writeTimeout(30, TimeUnit.SECONDS)
+                addInterceptor(AuthInterceptor())
+            }
+        return Retrofit
+            .Builder()
             .client(okHttpBuilder.build())
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -36,23 +37,23 @@ object AppModule {
             .create(ChimesApi::class.java)
     }
 
-
     @Singleton
     @Provides
-    fun provideAuthApi(): AuthApi {
-        return Retrofit.Builder()
+    fun provideAuthApi(): AuthApi =
+        Retrofit
+            .Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AuthApi::class.java)
-    }
+
     @Singleton
     @Provides
-    fun provideTokenApi(): TokenApi{
-        return Retrofit.Builder()
+    fun provideTokenApi(): TokenApi =
+        Retrofit
+            .Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(TokenApi::class.java)
-    }
 }

@@ -32,26 +32,27 @@ import com.axionlabs.chimespace.models.domain.Author
 @Composable
 fun ProfileComponent(
     modifier: Modifier = Modifier,
-    author: Author = dummyAuthor
+    author: Author = dummyAuthor,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-
         IconButton(
             onClick = { /* TODO: Add onClick functionality */ },
-            modifier = Modifier
-                .size(48.dp)
-                .clip(CircleShape)
-                .background(Color.LightGray)
+            modifier =
+                Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(Color.LightGray),
         ) {
             Icon(
                 imageVector = Icons.Rounded.Person,
                 contentDescription = "Profile Picture",
-                modifier = Modifier.fillMaxSize(0.7f)
+                modifier = Modifier.fillMaxSize(0.7f),
             )
         }
 
@@ -59,19 +60,21 @@ fun ProfileComponent(
 
         Column(
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         ) {
             Text(
                 text = author.penName,
-                style = MaterialTheme.typography.bodyMedium.copy(
-                    fontWeight = FontWeight.Bold
-                )
+                style =
+                    MaterialTheme.typography.bodyMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                    ),
             )
             Text(
                 text = author.userName,
-                style = MaterialTheme.typography.bodySmall.copy(
-                    color = Color.Gray
-                )
+                style =
+                    MaterialTheme.typography.bodySmall.copy(
+                        color = Color.Gray,
+                    ),
             )
         }
     }
