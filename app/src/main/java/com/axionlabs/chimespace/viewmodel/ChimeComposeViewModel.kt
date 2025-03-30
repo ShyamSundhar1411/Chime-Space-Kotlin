@@ -23,7 +23,7 @@ class ChimeComposeViewModel @Inject constructor(private val repository: ChimeRep
         viewModelScope.launch {
             _chimeData.value = DataOrException(loading = true)
             try{
-                _chimeData.value = repository.createChime(fetchAccessTokenFromSharedPreference(),chimeData)
+                _chimeData.value = repository.createChime(chimeData)
             } catch (e: Exception){
                 _chimeData.value = DataOrException(e = e)
             }
@@ -31,8 +31,5 @@ class ChimeComposeViewModel @Inject constructor(private val repository: ChimeRep
                 _chimeData.value = _chimeData.value.copy(loading = false)
             }
         }
-    }
-    private fun fetchAccessTokenFromSharedPreference(): String {
-        return SharedPreferencesManager.getValue("accessToken", "")
     }
 }

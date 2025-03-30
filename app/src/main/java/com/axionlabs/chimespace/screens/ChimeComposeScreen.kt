@@ -10,6 +10,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +28,21 @@ import com.axionlabs.chimespace.viewmodel.ChimeComposeViewModel
 fun ChimeComposeScreen(navController: NavController, chimeComposeViewModel: ChimeComposeViewModel = hiltViewModel()){
     val chimeData = chimeComposeViewModel.chimeData.collectAsState().value
     val context = LocalContext.current
+
+    LaunchedEffect(chimeData.data) {
+        if (chimeData.data?.statusCode == 201) {
+            Toast.makeText(context, "Chime Created", Toast.LENGTH_SHORT).show()
+            navController.navigate(Routes.HomeScreen.name) {
+                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
+        else{
+            val errorMessage = chimeData.e?.localizedMessage ?: "An error occurred"
+            Toast.makeText(context, "Error: $errorMessage", Toast.LENGTH_SHORT).show()
+        }
+    }
     Scaffold(
         topBar = {
             ChimeSpaceAppBarComponent(
@@ -46,23 +62,6 @@ fun ChimeComposeScreen(navController: NavController, chimeComposeViewModel: Chim
         Box(
             modifier = Modifier.padding(innerPadding).fillMaxSize(),
         ){
-
-            when {
-                chimeData.data != null -> {
-                    Toast.makeText(context, "Chime Created", Toast.LENGTH_SHORT).show()
-                    navController.navigate(Routes.HomeScreen.name) {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-                chimeData.e != null -> {
-                    val errorMessage = chimeData.e?.localizedMessage ?: "An error occurred"
-                    Toast.makeText(context, "Error: $errorMessage", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-
             ChimeComposeFormComponent(
                 modifier = Modifier.padding(innerPadding),
                 onSubmit = {
