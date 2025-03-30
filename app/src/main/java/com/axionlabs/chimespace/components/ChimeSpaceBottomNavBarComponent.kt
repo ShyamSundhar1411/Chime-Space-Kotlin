@@ -12,10 +12,12 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -44,7 +46,8 @@ fun ChimeSpaceBottomNavBarComponent(navController: NavController) {
 
 
     NavigationBar(
-        modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 24.dp)
+        modifier = Modifier.fillMaxWidth().defaultMinSize(minHeight = 24.dp),
+        containerColor = Color.Transparent
     ) {
         val navBackStackEntry = navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry.value?.destination?.route

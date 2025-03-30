@@ -2,6 +2,7 @@ package com.axionlabs.chimespace.di
 
 import com.axionlabs.chimespace.network.AuthApi
 import com.axionlabs.chimespace.network.ChimesApi
+import com.axionlabs.chimespace.network.TokenApi
 import com.axionlabs.chimespace.utils.AuthInterceptor
 import com.axionlabs.chimespace.utils.Constants
 import dagger.Module
@@ -44,5 +45,14 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AuthApi::class.java)
+    }
+    @Singleton
+    @Provides
+    fun provideTokenApi(): TokenApi{
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(TokenApi::class.java)
     }
 }
