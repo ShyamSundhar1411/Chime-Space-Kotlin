@@ -38,9 +38,6 @@ jobs:
       - name: Run Ktlint Check
         run: ./gradlew ktlintCheck
 
-      - name: Detect New Violations
-        run: ./gradlew ktlintDetect
-
       - name: Upload Ktlint Report (if it fails)
         if: failure()
         uses: actions/upload-artifact@v4
