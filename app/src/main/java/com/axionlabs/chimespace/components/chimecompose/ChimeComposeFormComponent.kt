@@ -2,11 +2,16 @@ package com.axionlabs.chimespace.components.chimecompose
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Done
@@ -31,99 +36,86 @@ fun ChimeComposeFormComponent(
     modifier: Modifier = Modifier,
     onSubmit: (ChimeCreateOrUpdateRequest) -> Unit = {},
 ) {
-    val chimeTitleState =
-        rememberSaveable {
-            mutableStateOf("")
-        }
-    val chimeContentState =
-        rememberSaveable {
-            mutableStateOf("")
-        }
-    val isPrivateState =
-        rememberSaveable {
-            mutableStateOf(false)
-        }
+    val chimeTitleState = rememberSaveable { mutableStateOf("") }
+    val chimeContentState = rememberSaveable { mutableStateOf("") }
+    val isPrivateState = rememberSaveable { mutableStateOf(false) }
+
     val keyboardController = LocalSoftwareKeyboardController.current
-    val isValidForm =
-        remember(chimeTitleState.value, chimeContentState.value) {
-            chimeTitleState.value.trim().isNotEmpty() && chimeContentState.value.trim().isNotEmpty()
-        }
     val context = LocalContext.current
+
+    val isValidForm = remember(chimeTitleState.value, chimeContentState.value) {
+        chimeTitleState.value.trim().isNotEmpty() && chimeContentState.value.trim().isNotEmpty()
+    }
+
     LazyColumn(
-        modifier = modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item {
-            CommonTextField(
-                valueState = chimeTitleState,
-                placeholder = "Chime Title",
-                onValueChange = {
-                    chimeTitleState.value = it
-                },
-                onAction =
-                    KeyboardActions {
-                        keyboardController?.hide()
-                    },
-            )
-            CommonTextField(
-                valueState = chimeContentState,
-                placeholder = "Chime Content",
-                maxLines = 5,
-                singleLine = false,
-                onValueChange = {
-                    chimeContentState.value = it
-                },
-                onAction =
-                    KeyboardActions {
+            Column (verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                CommonTextField(
+                    valueState = chimeTitleState,
+                    placeholder = "Chime Title",
+                    onValueChange = { chimeTitleState.value = it },
+                    onAction = KeyboardActions { keyboardController?.hide() },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                CommonTextField(
+                    valueState = chimeContentState,
+                    placeholder = "What are your thoughts today?",
+                    maxLines = Int.MAX_VALUE,
+                    singleLine = false,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 150.dp, max = 400.dp),
+                    onValueChange = { chimeContentState.value = it },
+                    onAction = KeyboardActions {
                         if (!isValidForm) return@KeyboardActions
                         keyboardController?.hide()
                     },
-            )
-            FilterChip(
-                onClick = {
-                    isPrivateState.value = !isPrivateState.value
-                },
-                label = { Text("Is Private") },
-                selected = isPrivateState.value,
-                leadingIcon =
-                    if (isPrivateState.value) {
+                )
+
+                FilterChip(
+                    onClick = { isPrivateState.value = !isPrivateState.value },
+                    label = { Text("Is Private") },
+                    selected = isPrivateState.value,
+                    leadingIcon = if (isPrivateState.value) {
                         {
                             Icon(
                                 imageVector = Icons.Filled.Done,
                                 contentDescription = "Done icon",
                             )
                         }
-                    } else {
-                        null
-                    },
-            )
-            FilledTonalButton(
-                onClick = {
-                    if (isValidForm) {
-                        val chimeCreateOrUpdateRequest =
-                            ChimeCreateOrUpdateRequest(
+                    } else null
+                )
+
+                FilledTonalButton(
+                    onClick = {
+                        if (isValidForm) {
+                            val request = ChimeCreateOrUpdateRequest(
                                 chimeTitle = chimeTitleState.value.trim(),
                                 chimeContent = chimeContentState.value.trim(),
                                 isPrivate = isPrivateState.value,
                             )
-                        onSubmit.invoke(chimeCreateOrUpdateRequest)
-                    } else {
-                        Toast
-                            .makeText(
-                                context,
-                                "Please fill all the fields",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                    }
-                },
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Create,
-                    contentDescription = "Post",
-                    modifier = Modifier.size(ButtonDefaults.IconSize),
-                )
-                Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-                Text(text = "Post")
+                            onSubmit.invoke(request)
+                        } else {
+                            Toast.makeText(context, "Please fill all the fields", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    },
+
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Create,
+                        contentDescription = "Post",
+                        modifier = Modifier.size(ButtonDefaults.IconSize),
+                    )
+                    Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+                    Text(text = "Post")
+                }
             }
         }
     }

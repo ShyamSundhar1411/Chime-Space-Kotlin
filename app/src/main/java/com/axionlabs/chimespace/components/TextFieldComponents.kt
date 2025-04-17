@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CommonTextField(
+    modifier: Modifier = Modifier,
     valueState: MutableState<String>,
     placeholder: String,
     onAction: KeyboardActions = KeyboardActions.Default,
@@ -33,6 +34,7 @@ fun CommonTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
     maxLines: Int = 1,
+
 ) {
     OutlinedTextField(
         value = valueState.value,
@@ -48,9 +50,9 @@ fun CommonTextField(
             ),
         shape = RoundedCornerShape(15.dp),
         modifier =
-            Modifier
+            modifier
                 .fillMaxWidth()
-                .padding(start = 10.dp, end = 10.dp),
+                .padding(horizontal = 10.dp),
     )
 }
 
