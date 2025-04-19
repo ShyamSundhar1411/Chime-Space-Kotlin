@@ -34,7 +34,6 @@ fun CommonTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
     maxLines: Int = 1,
-
 ) {
     OutlinedTextField(
         value = valueState.value,

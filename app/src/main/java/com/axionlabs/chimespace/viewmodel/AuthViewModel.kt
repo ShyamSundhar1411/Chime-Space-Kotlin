@@ -4,11 +4,15 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.axionlabs.chimespace.data.DataOrException
+import com.axionlabs.chimespace.models.domain.User
 import com.axionlabs.chimespace.models.request.auth.LoginRequest
 import com.axionlabs.chimespace.models.request.auth.SignUpRequest
+import com.axionlabs.chimespace.models.request.token.TokenRefreshRequest
 import com.axionlabs.chimespace.models.response.auth.LoginResponse
 import com.axionlabs.chimespace.models.response.auth.SignUpResponse
+import com.axionlabs.chimespace.models.response.token.TokenRefreshResponse
 import com.axionlabs.chimespace.repository.AuthRepository
+import com.axionlabs.chimespace.repository.TokenRepository
 import com.axionlabs.chimespace.utils.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +24,8 @@ import javax.inject.Inject
 class AuthViewModel
     @Inject
     constructor(
-        private val repository: AuthRepository,
+        private val authRepository: AuthRepository,
+        private val tokenRepository: TokenRepository,
     ) : ViewModel() {
         private val _loginData =
             MutableStateFlow<DataOrException<LoginResponse, Boolean, Exception>>(
@@ -33,7 +38,13 @@ class AuthViewModel
                 DataOrException(),
             )
         private val _isAuthenticated = MutableStateFlow(false)
+        private val _tokenRefreshData = MutableStateFlow<DataOrException<TokenRefreshResponse, Boolean, Exception>>(
+            DataOrException()
+        )
+        val tokenRefreshData = _tokenRefreshData.asStateFlow()
         val isAuthenticated = _isAuthenticated.asStateFlow()
+        private val _user = MutableStateFlow<User?>(null)
+        val user = _user.asStateFlow()
 
         init {
             viewModelScope.launch {
@@ -48,7 +59,7 @@ class AuthViewModel
                 _loginData.value = DataOrException(loading = true)
 
                 try {
-                    val response = repository.login(loginRequest)
+                    val response = authRepository.login(loginRequest)
                     _loginData.value = response
 
                     response.data?.let {
@@ -70,7 +81,7 @@ class AuthViewModel
                 _signUpData.value = DataOrException(loading = true)
 
                 try {
-                    val response = repository.signUp(signUpRequest)
+                    val response = authRepository.signUp(signUpRequest)
                     _signUpData.value = response
 
                     response.data?.let {
@@ -91,9 +102,20 @@ class AuthViewModel
             SharedPreferencesManager.putValue("isAuthenticated", false)
         }
 
+
         private fun checkAuthenticationStatus() {
             viewModelScope.launch {
-                _isAuthenticated.value = SharedPreferencesManager.getValue("isAuthenticated", false)
+                val authenticated = SharedPreferencesManager.getValue("isAuthenticated", false)
+                if(authenticated){
+                    val refreshToken = SharedPreferencesManager.getValue("refreshToken", "")
+                    val tokenRefreshRequest = TokenRefreshRequest(refreshToken)
+                    Log.d("RefreshRequest", tokenRefreshRequest.toString())
+                    _tokenRefreshData.value = tokenRepository.refreshTokens(tokenRefreshRequest)
+                    Log.d("RefreshToken", _tokenRefreshData.value.toString())
+                    _tokenRefreshData.value.data?.let {
+                        saveAuthState(it.accessToken, it.refreshToken)
+                    }
+                }
             }
         }
 
