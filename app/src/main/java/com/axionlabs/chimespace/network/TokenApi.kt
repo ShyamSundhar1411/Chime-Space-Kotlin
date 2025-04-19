@@ -2,7 +2,6 @@ package com.axionlabs.chimespace.network
 
 import com.axionlabs.chimespace.models.request.token.TokenRefreshRequest
 import com.axionlabs.chimespace.models.response.token.TokenRefreshResponse
-import com.axionlabs.chimespace.utils.NoAuth
 import retrofit2.http.Body
 import retrofit2.http.POST
 import javax.inject.Singleton

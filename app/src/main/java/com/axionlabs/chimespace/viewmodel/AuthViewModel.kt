@@ -38,9 +38,10 @@ class AuthViewModel
                 DataOrException(),
             )
         private val _isAuthenticated = MutableStateFlow(false)
-        private val _tokenRefreshData = MutableStateFlow<DataOrException<TokenRefreshResponse, Boolean, Exception>>(
-            DataOrException()
-        )
+        private val _tokenRefreshData =
+            MutableStateFlow<DataOrException<TokenRefreshResponse, Boolean, Exception>>(
+                DataOrException(),
+            )
         val tokenRefreshData = _tokenRefreshData.asStateFlow()
         val isAuthenticated = _isAuthenticated.asStateFlow()
         private val _user = MutableStateFlow<User?>(null)
@@ -102,11 +103,10 @@ class AuthViewModel
             SharedPreferencesManager.putValue("isAuthenticated", false)
         }
 
-
         private fun checkAuthenticationStatus() {
             viewModelScope.launch {
                 val authenticated = SharedPreferencesManager.getValue("isAuthenticated", false)
-                if(authenticated){
+                if (authenticated) {
                     val refreshToken = SharedPreferencesManager.getValue("refreshToken", "")
                     val tokenRefreshRequest = TokenRefreshRequest(refreshToken)
                     Log.d("RefreshRequest", tokenRefreshRequest.toString())
