@@ -8,9 +8,6 @@ import javax.inject.Singleton
 @Singleton
 interface UserApi {
     @RequiresAuth
-    @GET("/user/me")
+    @GET("user/me/")
     suspend fun getProfile(): UserProfileResponse
-
-
-
 }

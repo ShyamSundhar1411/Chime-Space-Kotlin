@@ -1,5 +1,6 @@
 package com.axionlabs.chimespace.utils
 
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -15,6 +16,7 @@ class AuthInterceptor : Interceptor {
                 header("User-Agent", "android")
                 if (requiresAuth) {
                     val accessToken = SharedPreferencesManager.getValue("accessToken", "")
+                    Log.d("Interceptor: ",accessToken)
                     addHeader("Authorization", "Bearer $accessToken")
                 }
             }

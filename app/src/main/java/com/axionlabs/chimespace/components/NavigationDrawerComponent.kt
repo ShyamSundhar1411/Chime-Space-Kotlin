@@ -27,6 +27,7 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,6 +50,7 @@ fun NavigationDrawerComponent(
     authViewModel: AuthViewModel = hiltViewModel(),
     content: @Composable (PaddingValues) -> Unit,
 ) {
+    val user = authViewModel.userData.collectAsState().value.data?.profile
     val menuItems =
         listOf<MenuItem>(
             MenuItem(
@@ -93,14 +95,14 @@ fun NavigationDrawerComponent(
                         modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
                     ) {
                         Text(
-                            text = "John Doe",
+                            text = user?.userName ?: "Guest",
                             style =
                                 MaterialTheme.typography.bodyMedium.copy(
                                     fontWeight = FontWeight.Bold,
                                 ),
                         )
                         Text(
-                            text = "@johndoe",
+                            text = ("@" + user?.penName),
                             style =
                                 MaterialTheme.typography.bodySmall.copy(
                                     color = Color.Gray,
