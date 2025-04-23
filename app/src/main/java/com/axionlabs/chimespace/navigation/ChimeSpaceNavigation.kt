@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.axionlabs.chimespace.screens.AuthenticationScreen
 import com.axionlabs.chimespace.screens.ChimeComposeScreen
 import com.axionlabs.chimespace.screens.HomeScreen
+import com.axionlabs.chimespace.screens.ProfileScreen
 import com.axionlabs.chimespace.screens.SettingsScreen
 
 @Composable
@@ -24,6 +25,9 @@ fun ChimeSpaceNavigation() {
         }
         composable(Routes.ChimeComposeScreen.name) {
             ChimeComposeScreen(navController = navController)
+        }
+        composable(Routes.ProfileScreen.name){
+            ProfileScreen(navController = navController)
         }
     }
 }

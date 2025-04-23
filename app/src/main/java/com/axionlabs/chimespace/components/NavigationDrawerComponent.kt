@@ -60,7 +60,7 @@ fun NavigationDrawerComponent(
             MenuItem(
                 icon = Icons.Outlined.PersonOutline,
                 label = "Profile",
-                route = Routes.HomeScreen.name,
+                route = Routes.ProfileScreen.name,
             ),
             MenuItem(
                 icon = Icons.Outlined.Settings,

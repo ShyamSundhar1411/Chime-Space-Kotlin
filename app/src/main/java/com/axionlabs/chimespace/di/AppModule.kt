@@ -61,12 +61,13 @@ object AppModule {
     @Singleton
     @Provides
     fun provideUserApi(): UserApi {
-        val okHttpBuilder = OkHttpClient.Builder().apply {
-            connectTimeout(30, TimeUnit.SECONDS)
-            readTimeout(30, TimeUnit.SECONDS)
-            writeTimeout(30, TimeUnit.SECONDS)
-            addInterceptor(AuthInterceptor())
-        }
+        val okHttpBuilder =
+            OkHttpClient.Builder().apply {
+                connectTimeout(30, TimeUnit.SECONDS)
+                readTimeout(30, TimeUnit.SECONDS)
+                writeTimeout(30, TimeUnit.SECONDS)
+                addInterceptor(AuthInterceptor())
+            }
         return Retrofit
             .Builder()
             .client(okHttpBuilder.build())
