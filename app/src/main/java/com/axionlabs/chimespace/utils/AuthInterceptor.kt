@@ -16,7 +16,7 @@ class AuthInterceptor : Interceptor {
                 header("User-Agent", "android")
                 if (requiresAuth) {
                     val accessToken = SharedPreferencesManager.getValue("accessToken", "")
-                    Log.d("Interceptor: ",accessToken)
+                    Log.d("Interceptor: ", accessToken)
                     addHeader("Authorization", "Bearer $accessToken")
                 }
             }

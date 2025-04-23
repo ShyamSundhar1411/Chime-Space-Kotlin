@@ -57,13 +57,22 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(TokenApi::class.java)
+
     @Singleton
     @Provides
-    fun provideUserApi(): UserApi =
-        Retrofit
+    fun provideUserApi(): UserApi {
+        val okHttpBuilder = OkHttpClient.Builder().apply {
+            connectTimeout(30, TimeUnit.SECONDS)
+            readTimeout(30, TimeUnit.SECONDS)
+            writeTimeout(30, TimeUnit.SECONDS)
+            addInterceptor(AuthInterceptor())
+        }
+        return Retrofit
             .Builder()
+            .client(okHttpBuilder.build())
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(UserApi::class.java)
+    }
 }

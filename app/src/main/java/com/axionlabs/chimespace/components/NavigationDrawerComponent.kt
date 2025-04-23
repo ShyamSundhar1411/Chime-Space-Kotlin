@@ -50,7 +50,11 @@ fun NavigationDrawerComponent(
     authViewModel: AuthViewModel = hiltViewModel(),
     content: @Composable (PaddingValues) -> Unit,
 ) {
-    val user = authViewModel.userData.collectAsState().value.data?.profile
+    val user =
+        authViewModel.userData
+            .collectAsState()
+            .value.data
+            ?.profile
     val menuItems =
         listOf<MenuItem>(
             MenuItem(
