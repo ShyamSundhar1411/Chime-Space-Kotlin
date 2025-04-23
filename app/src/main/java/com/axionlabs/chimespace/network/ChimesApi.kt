@@ -23,4 +23,8 @@ interface ChimesApi {
     suspend fun createChime(
         @Body chimeData: ChimeCreateOrUpdateRequest,
     ): ChimeCreateOrUpdateResponse
+
+    @RequiresAuth
+    @GET("chimes/user/")
+    suspend fun getChimesFromUser(): ListChimeResponse
 }

@@ -26,7 +26,7 @@ fun ChimeSpaceNavigation() {
         composable(Routes.ChimeComposeScreen.name) {
             ChimeComposeScreen(navController = navController)
         }
-        composable(Routes.ProfileScreen.name){
+        composable(Routes.ProfileScreen.name) {
             ProfileScreen(navController = navController)
         }
     }

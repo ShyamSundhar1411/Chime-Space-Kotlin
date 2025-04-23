@@ -1,7 +1,5 @@
 package com.axionlabs.chimespace.navigation
 
-import android.provider.ContactsContract.Profile
-
 enum class Routes {
     AuthenticationScreen,
     HomeScreen,
