@@ -15,48 +15,46 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel
-@Inject
-constructor(
-    private val userRepository: UserRepository,
-    private val chimeRepository: ChimeRepository
-) : ViewModel() {
-    private val _userData =
-        MutableStateFlow<DataOrException<UserProfileResponse, Boolean, Exception>>(DataOrException())
-    val userData = _userData.asStateFlow()
-    private val _chimeData =
-        MutableStateFlow<DataOrException<ListChimeResponse, Boolean, Exception>>(DataOrException())
-    val chimeData = _chimeData.asStateFlow()
+    @Inject
+    constructor(
+        private val userRepository: UserRepository,
+        private val chimeRepository: ChimeRepository,
+    ) : ViewModel() {
+        private val _userData =
+            MutableStateFlow<DataOrException<UserProfileResponse, Boolean, Exception>>(DataOrException())
+        val userData = _userData.asStateFlow()
+        private val _chimeData =
+            MutableStateFlow<DataOrException<ListChimeResponse, Boolean, Exception>>(DataOrException())
+        val chimeData = _chimeData.asStateFlow()
 
-
-    init {
-        getUserProfile()
-        getChimeData()
-    }
-
-    fun getUserProfile() {
-        viewModelScope.launch {
-            try {
-                _userData.value = DataOrException(loading = true)
-                _userData.value = userRepository.getProfile()
-            } catch (e: Exception) {
-                _userData.value = DataOrException(e = e)
-            } finally {
-                _userData.value = _userData.value.copy(loading = false)
-            }
+        init {
+            getUserProfile()
+            getChimeData()
         }
-    }
 
-    fun getChimeData() {
-        viewModelScope.launch {
-            try {
-                _chimeData.value = DataOrException(loading = true)
-                _chimeData.value = chimeRepository.getChimesFromUser()
-            } catch (e: Exception) {
-                _chimeData.value = DataOrException(e = e)
-            } finally {
-                _chimeData.value = _chimeData.value.copy(loading = false)
+        fun getUserProfile() {
+            viewModelScope.launch {
+                try {
+                    _userData.value = DataOrException(loading = true)
+                    _userData.value = userRepository.getProfile()
+                } catch (e: Exception) {
+                    _userData.value = DataOrException(e = e)
+                } finally {
+                    _userData.value = _userData.value.copy(loading = false)
+                }
             }
         }
 
+        fun getChimeData() {
+            viewModelScope.launch {
+                try {
+                    _chimeData.value = DataOrException(loading = true)
+                    _chimeData.value = chimeRepository.getChimesFromUser()
+                } catch (e: Exception) {
+                    _chimeData.value = DataOrException(e = e)
+                } finally {
+                    _chimeData.value = _chimeData.value.copy(loading = false)
+                }
+            }
+        }
     }
-}

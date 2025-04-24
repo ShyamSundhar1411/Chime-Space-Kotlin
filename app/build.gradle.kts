@@ -70,6 +70,8 @@ dependencies {
     implementation(libs.paging.runtime)
     implementation(libs.retrofit2)
     implementation(libs.converter.gson)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
     implementation(libs.gson)
     implementation(libs.okhttp)
     implementation(libs.datastore)

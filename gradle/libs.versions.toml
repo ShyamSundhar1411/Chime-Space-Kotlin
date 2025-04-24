@@ -1,13 +1,13 @@
 [versions]
 agp = "8.9.2"
 kotlin = "2.0.0"
-coreKtx = "1.15.0"
+coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
-composeBom = "2025.03.01"
+composeBom = "2025.04.01"
 hilt = "2.51.1"
 ksp = "2.0.0-1.0.21"
 hiltViewModel = "1.2.0"
@@ -17,8 +17,9 @@ paging-version = "3.3.6"
 retrofit = "2.11.0"
 okhttp = "4.12.0"
 gson = "2.11.0"
-datastore = "1.1.4"
+datastore = "1.1.5"
 ktlint = "12.2.0"
+coil = "3.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,6 +47,9 @@ retrofit2 =  {group = "com.squareup.retrofit2",name = "retrofit",version.ref = "
 converter-gson = {group = "com.squareup.retrofit2",name = "converter-gson",version.ref = "retrofit"}
 gson = {group = "com.google.code.gson",name = "gson",version.ref = "gson"}
 okhttp = {group = "com.squareup.okhttp3",name = "okhttp",version.ref = "okhttp"}
+coil-compose = {module = "io.coil-kt.coil3:coil-compose", version.ref = "coil"}
+coil-network = {module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil"}
+
 datastore = {group = "androidx.datastore",name = "datastore-preferences",version.ref = "datastore"}
 
 [plugins]
