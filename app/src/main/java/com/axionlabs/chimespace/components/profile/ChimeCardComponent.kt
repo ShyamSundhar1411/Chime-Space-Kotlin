@@ -41,9 +41,10 @@ fun ChimeCardComponent(
     onEdit: (Chime) -> Unit = {},
     onDelete: (Chime) -> Unit = {},
 ) {
-    val showDropDown = remember{
-        mutableStateOf(false)
-    }
+    val showDropDown =
+        remember {
+            mutableStateOf(false)
+        }
 
     OutlinedCard(
         modifier =
@@ -65,8 +66,7 @@ fun ChimeCardComponent(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .wrapContentSize(Alignment.TopEnd)
-
+                            .wrapContentSize(Alignment.TopEnd),
                 ) {
                     IconButton(onClick = { showDropDown.value = !showDropDown.value }) {
                         Icon(Icons.Default.MoreVert, contentDescription = "More options")
@@ -74,36 +74,38 @@ fun ChimeCardComponent(
                     DropdownMenu(
                         expanded = showDropDown.value,
                         onDismissRequest = { showDropDown.value = false },
-                        modifier = Modifier
-                            .width(160.dp)
-
+                        modifier =
+                            Modifier
+                                .width(160.dp),
                     ) {
                         DropdownMenuItem(
                             text = { Text(text = "Edit") },
-                            leadingIcon = {Icon(
-                                imageVector = Icons.Default.Edit,
-                                contentDescription = "Edit",
-                            )},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = "Edit",
+                                )
+                            },
                             onClick = {
                                 showDropDown.value = false
                                 onEdit(chime)
-                            }
+                            },
                         )
                         DropdownMenuItem(
                             text = { Text(text = "Delete") },
-                            leadingIcon = {Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Delete",
-                            )},
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Delete",
+                                )
+                            },
                             onClick = {
                                 showDropDown.value = false
                                 onDelete(chime)
-                            }
+                            },
                         )
                     }
                 }
-
-
             }
 
             Text(
