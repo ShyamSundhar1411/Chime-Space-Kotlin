@@ -11,10 +11,11 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProfileStatsComponent(chimesCount: Int) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         StatItemComponent("Posts", chimesCount.toString())
         StatItemComponent("Following", "10")

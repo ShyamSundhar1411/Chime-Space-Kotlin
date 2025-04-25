@@ -29,25 +29,29 @@ fun ProfileHeaderComponent(user: User?) {
         Image(
             painter = painterResource(id = R.drawable.cover_image),
             contentDescription = "Cover image",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(180.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(180.dp),
             contentScale = ContentScale.Crop,
         )
 
         Image(
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(LocalContext.current)
-                    .data(data = "https://www.gravatar.com/avatar")
-                    .crossfade(true)
-                    .build()
-            ),
+            painter =
+                rememberAsyncImagePainter(
+                    ImageRequest
+                        .Builder(LocalContext.current)
+                        .data(data = "https://www.gravatar.com/avatar")
+                        .crossfade(true)
+                        .build(),
+                ),
             contentDescription = "Profile image",
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .clip(CircleShape)
-                .align(Alignment.Center)
-                .height(100.dp)
+            modifier =
+                Modifier
+                    .clip(CircleShape)
+                    .align(Alignment.Center)
+                    .height(100.dp),
         )
     }
 
