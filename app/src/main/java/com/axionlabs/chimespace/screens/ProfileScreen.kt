@@ -5,14 +5,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -36,6 +34,9 @@ import coil3.request.crossfade
 import com.axionlabs.chimespace.R
 import com.axionlabs.chimespace.components.ExceptionResponseComponent
 import com.axionlabs.chimespace.components.LoaderComponent
+import com.axionlabs.chimespace.components.profile.ChimeCardComponent
+import com.axionlabs.chimespace.components.profile.ProfileHeaderComponent
+import com.axionlabs.chimespace.components.profile.ProfileStatsComponent
 import com.axionlabs.chimespace.components.profile.StatItemComponent
 import com.axionlabs.chimespace.viewmodel.ProfileViewModel
 
@@ -46,9 +47,17 @@ fun ProfileScreen(
 ) {
     val userData = profileViewModel.userData.collectAsState().value
     val chimeData = profileViewModel.chimeData.collectAsState().value
+
+    val user = userData.data?.profile
+    val chimes = chimeData.data?.chimes ?: emptyList()
+
     when {
-        userData.loading == true || chimeData.loading == true -> LoaderComponent()
-        userData.e != null || chimeData.e != null ->
+        userData.loading == true || chimeData.loading == true -> {
+            LoaderComponent()
+            return
+        }
+
+        userData.e != null || chimeData.e != null -> {
             ExceptionResponseComponent(
                 modifier = Modifier,
                 message = "Something went wrong",
@@ -56,72 +65,40 @@ fun ProfileScreen(
                     profileViewModel.getUserProfile()
                     profileViewModel.getChimeData()
                 },
-                showTryAgainButton = true
+                showTryAgainButton = true,
             )
-    }
-    Column(modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        val user = userData.data?.profile
-        val chimes = chimeData.data?.chimes ?: emptyList()
-
-        Box {
-            Image(
-                painter = painterResource(id = R.drawable.cover_image),
-                contentDescription = "cover image",
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .fillMaxWidth()
-                    .height(180.dp),
-                contentScale = ContentScale.Crop,
-            )
-            Image(
-                painter =
-                    rememberAsyncImagePainter(
-                        model =
-                            ImageRequest
-                                .Builder(
-                                    LocalContext.current,
-                                ).data("https://www.gravatar.com/avatar")
-                                .crossfade(true)
-                                .build(),
-                    ),
-                contentDescription = "Profile image",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .align(Alignment.Center)
-            )
+            return
         }
-        Spacer(modifier = Modifier.height(60.dp))
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            user?.userName?.let { Text(it, style = MaterialTheme.typography.titleLarge) }
-            user?.penName?.let { Text(it, style = MaterialTheme.typography.titleMedium) }
-            Spacer(modifier = Modifier.height(20.dp))
-            Button(onClick = {
-                Log.d("Profile", "Edit Profile")
-            }) {
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        item {
+            ProfileHeaderComponent(user = user)
+        }
+
+        item {
+            Spacer(modifier = Modifier.height(12.dp))
+            ProfileStatsComponent(chimesCount = chimes.size)
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        item {
+            Button(onClick = { Log.d("Profile", "Edit Profile") }) {
                 Text("Edit Profile")
             }
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                StatItemComponent("Posts", chimes.size.toString())
-                StatItemComponent("Following", "10")
-                StatItemComponent("Followers", "100")
-            }
+            Spacer(modifier = Modifier.height(16.dp))
         }
-        Spacer(modifier = Modifier.height(60.dp))
-        if (chimes.isNotEmpty()) {
-            LazyColumn {
-                items(chimes){
-                    Text(it.chimeTitle)
-                }
-            }
+
+        items(chimes) { chime ->
+            ChimeCardComponent(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                chime = chime
+            )
         }
     }
 }
-
